@@ -1,0 +1,41 @@
+{
+  "question": "What is the office Wi-Fi password?",
+  "evidence": [
+    {
+      "id": "P1",
+      "chunk_id": "auth-401:1:authentication-checks:0",
+      "document_id": "auth-401",
+      "title": "API authentication after deployment",
+      "version": "1",
+      "heading": "Authentication checks",
+      "section_id": "authentication-checks",
+      "text": "API authentication after deployment / Authentication checks\nCheck that the deployed Northstar API has AUTH_ISSUER=https://identity.northstar.invalid and AUTH_AUDIENCE=northstar-api. A mismatched issuer or audience causes 401 responses after deployment. Compare the active release configuration with the last healthy release. Never paste bearer tokens into an incident ticket.\n\nConfirm that the gateway forwards the Authorization header. Compare token expiry with the API clock; Northstar permits 30 seconds of clock skew. If only new pods fail, check the mounted identity configuration and restart only after correcting it.\n\nA synthetic log example is auth_failed reason=audience_mismatch release=r42. Record the reason, release and pod name without recording the token. Do not disable authentication to restore service. Escalate to the identity on-call if the issuer endpoint is unavailable.",
+      "score": 0.0
+    }
+  ],
+  "output": {
+    "status": "abstained",
+    "claims": [],
+    "reason": "The provided evidence does not contain any information about an office Wi-Fi password or authentication details. The text discusses API authentication, Northstar identity configuration checks, and troubleshooting for a deployed service, but it does not mention anything related to the office Wi-Fi password."
+  },
+  "model_digest": "65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b",
+  "repair_attempted": false,
+  "generation_details": {
+    "attempts": [
+      {
+        "model": "qwen2.5:1.5b",
+        "created_at": "2026-09-29T06:42:14.138679022Z",
+        "response": "{\"status\": \"abstained\", \"claims\": [], \"reason\": \"The provided evidence does not contain any information about an office Wi-Fi password or authentication details. The text discusses API authentication, Northstar identity configuration checks, and troubleshooting for a deployed service, but it does not mention anything related to the office Wi-Fi password.\"}",
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 12307785116,
+        "load_duration": 13764841,
+        "prompt_eval_count": 703,
+        "prompt_eval_duration": 8273790096,
+        "eval_count": 69,
+        "eval_duration": 4017593641
+      }
+    ]
+  },
+  "latency_ms": 12390.171990999988
+}

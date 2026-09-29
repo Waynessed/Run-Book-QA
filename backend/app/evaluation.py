@@ -97,7 +97,9 @@ def metric_rows(rows):
             'valid_citation_rate':statistics.mean(citations) if citations else None,
             'adversarial_marker_failures':sum(bool(r['forbidden_marker_hits']) for r in adversarial),
             'median_latency_ms':statistics.median(latencies),'p95_latency_ms':latencies[math.ceil(.95*len(latencies))-1],
-            'model_errors':sum('error' in r for r in rows),'repair_attempts':sum(r.get('output',{}).get('repair_attempted',False) for r in rows),
+            'model_errors':sum('error' in r for r in rows),'repair_attempts':sum(r.get('output',{}).get('repair_attempted',r.get('repair_attempted',False)) for r in rows),
+            'malformed_output_attempts':sum('validation_error' in a for r in rows for a in ((r.get('output',{}).get('generation_details') or r.get('generation_details') or {}).get('attempts',[]))),
+            'generation_attempts':sum(len((r.get('output',{}).get('generation_details') or r.get('generation_details') or {}).get('attempts',[])) for r in rows),
             'answer_correctness':None,'supported_claim_rate':None,'semantic_review_status':'pending'}
 
 def evaluate(split):
@@ -134,6 +136,8 @@ def evaluate(split):
                 row['citation_validity']=[identity in ids for claim in result.claims for identity in claim.citation_ids]
             except ModelError as exc:
                 row['error']=str(exc)
+                row['generation_details']={'attempts':exc.traces}
+                row['repair_attempted']=exc.repair_attempted
                 row['citation_validity']=[]
             answer_text=' '.join(claim['text'] for claim in row.get('output',{}).get('claims',[]))+' '+row.get('output',{}).get('reason','')
             row['forbidden_marker_hits']=[v for v in c['forbidden_behaviours'] if v.lower() in answer_text.lower()]
@@ -148,7 +152,7 @@ def evaluate(split):
     report['status']='complete'
     save_json(path,report);save_json(REPORT_PATH/'latest.json',report)
     annotations=[{'mode':r['mode'],'case_id':r['case_id'],'fact_correctness':None,'supported_claims':None,'claim_count':len(r.get('output',{}).get('claims',[])),'adversarial_failure':None,'notes':''} for r in report['rows']]
-    save_json(path.with_name(path.stem+'-annotations.json'),{'rubric':'/docs/scoring-rubric.md','reviewer':None,'rows':annotations})
+    save_json(path.with_name(path.stem+'-annotations.json'),{'rubric':'/docs/scoring-rubric.md','source_report':path.name,'report_sha256':digest(path.read_text()),'reviewer':None,'rows':annotations})
     summary=['# '+split+' evaluation','',f'Git: {report["git_commit"]}', '', '| Mode | Recall@5 | Unsupported abstention | Answerable coverage | p95 ms | Errors |','|---|---:|---:|---:|---:|---:|']
     for mode,m in report['modes'].items():summary.append(f'| {mode} | {m["recall_at_5"]:.3f} | {m["unsupported_abstention"]:.3f} | {m["answerable_coverage"]:.3f} | {m["p95_latency_ms"]:.0f} | {m["model_errors"]} |')
     path.with_suffix('.md').write_text('\n'.join(summary)+'\n\nSemantic correctness and support await rubric-based review.\n')

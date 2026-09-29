@@ -25,3 +25,46 @@ The stored chunk ID remains stable in `Passage.chunk_id`. `context_passages` ass
 `evaluation.load_cases` selects development by default. `validate_dataset` checks counts, unique IDs and grouped split isolation. `calibrate` sweeps development reranker scores, preferring a threshold meeting both gate targets; otherwise it chooses balanced accuracy. Corpus fingerprint checks reject a changed index during calibration.
 
 `evaluate` retrieves five candidates for Recall@5, executes `service.ask` with the same mode and real generator, and records validated/raw outputs, traces, actual latency and errors. It writes pending progress atomically, then final JSON/Markdown and null-filled semantic annotation templates. `metric_rows` computes structural/retrieval/abstention/coverage metrics. Factual correctness and supporting-claim rates remain null until rubric-based review. `freeze` pins app files, dependency lock, configuration, corpus files and dataset hashes; held-out runs reject changes or a mismatched Git revision.
+## Actual flow diagram
+
+```mermaid
+flowchart TD
+  M[Markdown with stable ID/version] --> R[read_source]
+  R --> H[chunk_source: heading + original character offsets]
+  H --> E[CPU MiniLM embeddings]
+  E --> T[ingest: advisory lock + atomic active replacement]
+  T --> D[(PostgreSQL text and exact vectors)]
+  Q[Question and selected mode] --> V[retrieve: keyword / cosine / RRF + reranker]
+  D --> V
+  V --> C[context_passages: P1-P3, source chunk IDs retained]
+  C --> G{Reranker confidence threshold}
+  G -->|below threshold| A[Explicit abstention]
+  G -->|accepted| L[generate: local Qwen, schema + evidence JSON]
+  L --> P[Pydantic schema and citation membership]
+  P -->|invalid| F[One repair, then visible error]
+  P -->|valid| U[Claims or model abstention + source UI]
+  U --> W[Rubric-based semantic inspection]
+```
+
+## Why exact source text matters
+
+The original implementation decoded tokenizer IDs, which lowercased identifiers and inserted punctuation spacing. The corrected implementation counts tokens while preserving the actual source characters:
+
+```python
+encoded = tokenizer(content, add_special_tokens=False, return_offsets_mapping=True)
+offsets = encoded["offset_mapping"]
+value = prefix + content[offsets[start][0]:offsets[min(start + budget, len(tokens)) - 1][1]]
+```
+
+## What each check proves
+
+| Check | Establishes | Does not establish |
+|---|---|---|
+| Atomic replacement / repeatable-read snapshot | No mixed active versions of one document within a query | Whether revised guidance is operationally correct |
+| Exact vector search | Exhaustive vector ranking for this corpus | Relevance to the user's actual intent |
+| Citation enum + membership | Every citation identifies supplied evidence | That the cited passage entails the claim |
+| Reranker gate | Development-calibrated relevance acceptance | A calibrated probability or a correct generated answer |
+| Labelled Recall@5 | Required source section appeared among five | That it reached the generator or was used correctly |
+| Semantic rubric review | Recorded interpretation of correctness/support | Independent human truth or generalization beyond the synthetic dataset |
+## Conditional generation contract
+`generation.response_schema` creates a oneOf schema for two mutually exclusive states. An answered result has one to three cited claims and empty reason; an abstained result has zero claims. `GeneratedAnswer.consistent` validates the same relationship independently. This prevents an extra uncited answered narrative field and rejects mixed statuses; semantic entailment still requires review. Failed raw model responses are retained by `ModelError.traces` for evaluation.

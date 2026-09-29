@@ -27,6 +27,8 @@ class GeneratedAnswer(BaseModel):
     def consistent(self):
         if (self.status == "answered") != bool(self.claims):
             raise ValueError("Answered needs claims; abstained must have no claims")
+        if self.status == "answered" and self.reason:
+            raise ValueError("Answered facts must appear only in cited claims; reason must be empty")
         return self
 
 class Passage(BaseModel):
