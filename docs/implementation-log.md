@@ -65,3 +65,14 @@ Quality/comparison decision: all modes use the same calibrated reranker confiden
 Expanded backend suite: 12 passed in 8.45s, including exact original source casing/punctuation, question-free dataset split manifest, and atomic replacement. Preliminary development calibration selected 0.7685428858, accepting 100% of answerable retrievals and rejecting 100% of unsupported retrievals. This is gate performance only, not model answer correctness. It ran around the document-update demonstration; it will be rerun against the stable final index. Added start/end corpus fingerprint checks to reject concurrent changes in later calibration runs.
 
 Routine correction: a Windows Python editing helper hit the host's GBK default on a UTF-8 frontend file. Reissued those file edits explicitly as UTF-8. Product containers use the pinned Linux runtime. No user text was lost.
+## RQ-03 / 2026-09-29 UTC — Retrieval and abstention integration
+
+`retrieve` supports exact cosine semantic search, PostgreSQL keyword ranking and hybrid RRF(k=60) across twenty candidates per baseline, followed by cross-encoder reranking of twenty merged candidates. `service.ask` applies the best reranker-score gate to all modes without changing baseline ordering. Hybrid is now the UI default, matching the API default. Model revisions/digest and image digests are pinned; actual generation options are centralized in settings.GENERATION_OPTIONS and written in reports.
+
+Updated prompt after development-only first-demo observations: prefer one direct short claim, leave answered reason empty, permit reuse of the correct citation. Schema and evidence precede the question in the JSON envelope. Serial evaluation orders cases by group/ID so related questions can reuse Ollama's prompt prefix cache; this scheduling is recorded and identical for all modes. No held-out outputs have been inspected or used for tuning.
+
+Added API boundary/503 tests and evaluation denominator tests (universal abstention cannot score perfect coverage or citation rate; errors count as failed outcomes). Full database suite: 19 passed in 20.15s. One upstream AnyIO BlockingPortal deprecation warning; locked runtime works.
+
+A recalibration attempt was interrupted when API restart terminated its docker-exec process. The host script reported Calibration failed; no successful new report or threshold application was claimed. Re-running after restart/tests finish. Avoid restarting the API or changing corpus while an in-container evaluation/calibration process is active.
+
+Measured development comparison and semantic review are pending. Retrieval calibration's preliminary 100%/100% scores must not be presented as generation accuracy.

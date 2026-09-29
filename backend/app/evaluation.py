@@ -14,7 +14,7 @@ from .retrieval import retrieve
 from .service import ask
 from .schemas import AskRequest
 from .generation import SYSTEM_PROMPT, model_metadata, ModelError
-from .settings import REPORT_PATH, CONFIG_PATH, CORPUS_PATH, EMBED_REVISION, RERANK_REVISION
+from .settings import REPORT_PATH, CONFIG_PATH, CORPUS_PATH, EMBED_REVISION, RERANK_REVISION, GENERATION_OPTIONS
 
 DATASET_PATH = Path(os.getenv('DATASET_PATH', '/evaluation/dataset.json'))
 
@@ -104,15 +104,15 @@ def evaluate(split):
         frozen=json.loads((REPORT_PATH/'freeze.json').read_text())
         if frozen['files']!=file_manifest():raise ValueError('Frozen files changed; held-out run rejected')
         if frozen['git_commit']!=os.getenv('GIT_COMMIT'):raise ValueError('Git revision differs from frozen manifest')
-    cases=load_cases(split)
+    cases=sorted(load_cases(split),key=lambda c:(c['group'],c['id']))
     with Session() as s: corpus_hash=corpus_version(s)
     report={'status':'running','date':datetime.now(timezone.utc).isoformat(),'split':split,
             'git_commit':os.getenv('GIT_COMMIT','unknown'),'corpus_hash':corpus_hash,
             'dataset_hash':digest(DATASET_PATH.read_text()),'manifest':file_manifest(),
-            'generator':model_metadata(),'prompt':SYSTEM_PROMPT,
+            'generator':model_metadata(),'generator_options':GENERATION_OPTIONS,'prompt':SYSTEM_PROMPT,
             'config':json.loads(CONFIG_PATH.read_text()),'model_revisions':{'embedding':EMBED_REVISION,'reranker':RERANK_REVISION},
             'dependencies':{p:version(p) for p in ['fastapi','pydantic','sqlalchemy','psycopg','sentence-transformers','transformers','torch','numpy','pgvector']},
-            'environment':{'platform':platform.platform(),'cpu_count':os.cpu_count()},'modes':{},'rows':[]}
+            'environment':{'platform':platform.platform(),'cpu_count':os.cpu_count(),'runtime':json.loads(Path('/config/runtime.json').read_text())},'modes':{},'rows':[]}
     stamp=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     path=REPORT_PATH/f'{split}-{stamp}.json'
     for mode in ['keyword','semantic','hybrid']:

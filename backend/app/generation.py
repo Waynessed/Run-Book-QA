@@ -1,11 +1,12 @@
 import json
 import httpx
 from .schemas import GeneratedAnswer, validate_citations
-from .settings import OLLAMA_URL, MODEL, MODEL_DIGEST
+from .settings import OLLAMA_URL, MODEL, MODEL_DIGEST, GENERATION_OPTIONS
 
 SYSTEM_PROMPT = """Answer the support question from the EVIDENCE below.
 If a passage describes the symptom or requested procedure, answer with its concrete checks.
-The passage need not repeat the question exactly. Give one to three SHORT claims.
+The passage need not repeat the question exactly. Prefer one direct SHORT claim;
+use up to three only when necessary. When answering, leave reason empty.
 Attach the ID of the passage that actually states each claim. Multiple claims may cite
 the SAME passage. Never assign citations by claim order. Prefer the source wording.
 Use no facts outside the evidence.
@@ -30,10 +31,10 @@ def model_metadata():
 
 def generate(question, passages):
     metadata = model_metadata()
-    prompt = json.dumps({"question": question, "evidence": [{"id": p.id, "text": p.text} for p in passages]})
+    prompt = json.dumps({"evidence": [{"id": p.id, "text": p.text} for p in passages], "question": question})
     schema = GeneratedAnswer.model_json_schema()
     schema["$defs"]["Claim"]["properties"]["citation_ids"]["items"]["enum"] = [p.id for p in passages]
-    prompt = json.dumps({**json.loads(prompt), "response_schema": schema})
+    prompt = json.dumps({"response_schema": schema, **json.loads(prompt)})
     error = None
     traces = []
     for attempt in range(2):
@@ -42,10 +43,11 @@ def generate(question, passages):
                 "model": MODEL, "system": SYSTEM_PROMPT,
                 "prompt": prompt if attempt == 0 else prompt + "\nRepair your previous invalid JSON: " + error,
                 "format": schema, "stream": False, "keep_alive": -1,
-                "options": {"temperature": 0, "seed": 42, "num_ctx": 4096, "num_predict": 300, "num_thread": 4},
+                "options": GENERATION_OPTIONS,
             })
             response.raise_for_status()
             raw = response.json()
+            raw.pop("context", None)
             traces.append(raw)
             answer = GeneratedAnswer.model_validate_json(raw["response"])
             return validate_citations(answer, passages), metadata["digest"], bool(attempt), {"attempts": traces}

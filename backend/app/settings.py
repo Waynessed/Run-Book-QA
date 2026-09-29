@@ -12,3 +12,5 @@ RERANK_REVISION = "233902d25c440f23af6f7d6e94d2946bac0bee0a"
 CONFIG_PATH = Path(os.getenv("CONFIG_PATH", "/config/retrieval.json"))
 CORPUS_PATH = Path(os.getenv("CORPUS_PATH", "/corpus"))
 REPORT_PATH = Path(os.getenv("REPORT_PATH", "/reports"))
+
+GENERATION_OPTIONS = {"temperature": 0, "seed": 42, "num_ctx": 4096, "num_predict": 300, "num_thread": 4}
