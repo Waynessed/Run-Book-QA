@@ -1,0 +1,414 @@
+{
+  "date": "2026-09-29T06:15:24.253869+00:00",
+  "split": "development",
+  "selected": {
+    "threshold": 0.7685428857803345,
+    "answerable_retrieval_coverage": 1.0,
+    "unsupported_retrieval_abstention": 1.0,
+    "balanced_accuracy": 1.0,
+    "meets_targets": true
+  },
+  "scores": [
+    {
+      "id": "dev-a-01",
+      "category": "answerable",
+      "score": 6.259882926940918
+    },
+    {
+      "id": "dev-a-02",
+      "category": "answerable",
+      "score": 4.703061580657959
+    },
+    {
+      "id": "dev-a-03",
+      "category": "answerable",
+      "score": 4.344536781311035
+    },
+    {
+      "id": "dev-a-04",
+      "category": "answerable",
+      "score": 1.5566234588623047
+    },
+    {
+      "id": "dev-a-05",
+      "category": "answerable",
+      "score": 2.5468380451202393
+    },
+    {
+      "id": "dev-a-06",
+      "category": "answerable",
+      "score": 4.802180767059326
+    },
+    {
+      "id": "dev-a-07",
+      "category": "answerable",
+      "score": 3.4527292251586914
+    },
+    {
+      "id": "dev-a-08",
+      "category": "answerable",
+      "score": 3.613938093185425
+    },
+    {
+      "id": "dev-a-09",
+      "category": "answerable",
+      "score": 6.508486270904541
+    },
+    {
+      "id": "dev-a-10",
+      "category": "answerable",
+      "score": 6.254395484924316
+    },
+    {
+      "id": "dev-u-01",
+      "category": "unsupported",
+      "score": -11.05620288848877
+    },
+    {
+      "id": "dev-u-02",
+      "category": "unsupported",
+      "score": -11.0911283493042
+    },
+    {
+      "id": "dev-u-03",
+      "category": "unsupported",
+      "score": -4.690831661224365
+    },
+    {
+      "id": "dev-u-04",
+      "category": "unsupported",
+      "score": -8.458418846130371
+    },
+    {
+      "id": "dev-u-05",
+      "category": "unsupported",
+      "score": -10.782245635986328
+    },
+    {
+      "id": "dev-a-11",
+      "category": "answerable",
+      "score": 5.2735819816589355
+    },
+    {
+      "id": "dev-a-12",
+      "category": "answerable",
+      "score": 5.51673698425293
+    },
+    {
+      "id": "dev-a-13",
+      "category": "answerable",
+      "score": 4.901637077331543
+    },
+    {
+      "id": "dev-a-14",
+      "category": "answerable",
+      "score": 4.122303009033203
+    },
+    {
+      "id": "dev-a-15",
+      "category": "answerable",
+      "score": 4.199759006500244
+    },
+    {
+      "id": "dev-a-16",
+      "category": "answerable",
+      "score": 2.5641274452209473
+    },
+    {
+      "id": "dev-a-17",
+      "category": "answerable",
+      "score": 2.6509835720062256
+    },
+    {
+      "id": "dev-a-18",
+      "category": "answerable",
+      "score": 2.4672563076019287
+    },
+    {
+      "id": "dev-a-19",
+      "category": "answerable",
+      "score": 5.4440226554870605
+    },
+    {
+      "id": "dev-a-20",
+      "category": "answerable",
+      "score": 5.476540565490723
+    },
+    {
+      "id": "dev-a-21",
+      "category": "answerable",
+      "score": 0.7685428857803345
+    },
+    {
+      "id": "dev-a-22",
+      "category": "answerable",
+      "score": 1.1230616569519043
+    },
+    {
+      "id": "dev-a-23",
+      "category": "answerable",
+      "score": 6.538806438446045
+    },
+    {
+      "id": "dev-a-24",
+      "category": "answerable",
+      "score": 8.972081184387207
+    },
+    {
+      "id": "dev-u-06",
+      "category": "unsupported",
+      "score": -11.193915367126465
+    },
+    {
+      "id": "dev-u-07",
+      "category": "unsupported",
+      "score": -6.1557698249816895
+    },
+    {
+      "id": "dev-u-08",
+      "category": "unsupported",
+      "score": -11.105284690856934
+    }
+  ],
+  "sweep": [
+    {
+      "threshold": -12.193915367126465,
+      "answerable_retrieval_coverage": 1.0,
+      "unsupported_retrieval_abstention": 0.0,
+      "balanced_accuracy": 0.5,
+      "meets_targets": false
+    },
+    {
+      "threshold": -11.193915367126465,
+      "answerable_retrieval_coverage": 1.0,
+      "unsupported_retrieval_abstention": 0.0,
+      "balanced_accuracy": 0.5,
+      "meets_targets": false
+    },
+    {
+      "threshold": -11.105284690856934,
+      "answerable_retrieval_coverage": 1.0,
+      "unsupported_retrieval_abstention": 0.125,
+      "balanced_accuracy": 0.5625,
+      "meets_targets": false
+    },
+    {
+      "threshold": -11.0911283493042,
+      "answerable_retrieval_coverage": 1.0,
+      "unsupported_retrieval_abstention": 0.25,
+      "balanced_accuracy": 0.625,
+      "meets_targets": false
+    },
+    {
+      "threshold": -11.05620288848877,
+      "answerable_retrieval_coverage": 1.0,
+      "unsupported_retrieval_abstention": 0.375,
+      "balanced_accuracy": 0.6875,
+      "meets_targets": false
+    },
+    {
+      "threshold": -10.782245635986328,
+      "answerable_retrieval_coverage": 1.0,
+      "unsupported_retrieval_abstention": 0.5,
+      "balanced_accuracy": 0.75,
+      "meets_targets": false
+    },
+    {
+      "threshold": -8.458418846130371,
+      "answerable_retrieval_coverage": 1.0,
+      "unsupported_retrieval_abstention": 0.625,
+      "balanced_accuracy": 0.8125,
+      "meets_targets": false
+    },
+    {
+      "threshold": -6.1557698249816895,
+      "answerable_retrieval_coverage": 1.0,
+      "unsupported_retrieval_abstention": 0.75,
+      "balanced_accuracy": 0.875,
+      "meets_targets": false
+    },
+    {
+      "threshold": -4.690831661224365,
+      "answerable_retrieval_coverage": 1.0,
+      "unsupported_retrieval_abstention": 0.875,
+      "balanced_accuracy": 0.9375,
+      "meets_targets": false
+    },
+    {
+      "threshold": 0.7685428857803345,
+      "answerable_retrieval_coverage": 1.0,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 1.0,
+      "meets_targets": true
+    },
+    {
+      "threshold": 1.1230616569519043,
+      "answerable_retrieval_coverage": 0.9583333333333334,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.9791666666666667,
+      "meets_targets": true
+    },
+    {
+      "threshold": 1.5566234588623047,
+      "answerable_retrieval_coverage": 0.9166666666666666,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.9583333333333333,
+      "meets_targets": true
+    },
+    {
+      "threshold": 2.4672563076019287,
+      "answerable_retrieval_coverage": 0.875,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.9375,
+      "meets_targets": true
+    },
+    {
+      "threshold": 2.5468380451202393,
+      "answerable_retrieval_coverage": 0.8333333333333334,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.9166666666666667,
+      "meets_targets": true
+    },
+    {
+      "threshold": 2.5641274452209473,
+      "answerable_retrieval_coverage": 0.7916666666666666,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.8958333333333333,
+      "meets_targets": false
+    },
+    {
+      "threshold": 2.6509835720062256,
+      "answerable_retrieval_coverage": 0.75,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.875,
+      "meets_targets": false
+    },
+    {
+      "threshold": 3.4527292251586914,
+      "answerable_retrieval_coverage": 0.7083333333333334,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.8541666666666667,
+      "meets_targets": false
+    },
+    {
+      "threshold": 3.613938093185425,
+      "answerable_retrieval_coverage": 0.6666666666666666,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.8333333333333333,
+      "meets_targets": false
+    },
+    {
+      "threshold": 4.122303009033203,
+      "answerable_retrieval_coverage": 0.625,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.8125,
+      "meets_targets": false
+    },
+    {
+      "threshold": 4.199759006500244,
+      "answerable_retrieval_coverage": 0.5833333333333334,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.7916666666666667,
+      "meets_targets": false
+    },
+    {
+      "threshold": 4.344536781311035,
+      "answerable_retrieval_coverage": 0.5416666666666666,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.7708333333333333,
+      "meets_targets": false
+    },
+    {
+      "threshold": 4.703061580657959,
+      "answerable_retrieval_coverage": 0.5,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.75,
+      "meets_targets": false
+    },
+    {
+      "threshold": 4.802180767059326,
+      "answerable_retrieval_coverage": 0.4583333333333333,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.7291666666666666,
+      "meets_targets": false
+    },
+    {
+      "threshold": 4.901637077331543,
+      "answerable_retrieval_coverage": 0.4166666666666667,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.7083333333333334,
+      "meets_targets": false
+    },
+    {
+      "threshold": 5.2735819816589355,
+      "answerable_retrieval_coverage": 0.375,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.6875,
+      "meets_targets": false
+    },
+    {
+      "threshold": 5.4440226554870605,
+      "answerable_retrieval_coverage": 0.3333333333333333,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.6666666666666666,
+      "meets_targets": false
+    },
+    {
+      "threshold": 5.476540565490723,
+      "answerable_retrieval_coverage": 0.2916666666666667,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.6458333333333334,
+      "meets_targets": false
+    },
+    {
+      "threshold": 5.51673698425293,
+      "answerable_retrieval_coverage": 0.25,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.625,
+      "meets_targets": false
+    },
+    {
+      "threshold": 6.254395484924316,
+      "answerable_retrieval_coverage": 0.20833333333333334,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.6041666666666666,
+      "meets_targets": false
+    },
+    {
+      "threshold": 6.259882926940918,
+      "answerable_retrieval_coverage": 0.16666666666666666,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.5833333333333334,
+      "meets_targets": false
+    },
+    {
+      "threshold": 6.508486270904541,
+      "answerable_retrieval_coverage": 0.125,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.5625,
+      "meets_targets": false
+    },
+    {
+      "threshold": 6.538806438446045,
+      "answerable_retrieval_coverage": 0.08333333333333333,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.5416666666666666,
+      "meets_targets": false
+    },
+    {
+      "threshold": 8.972081184387207,
+      "answerable_retrieval_coverage": 0.041666666666666664,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.5208333333333334,
+      "meets_targets": false
+    },
+    {
+      "threshold": 9.972081184387207,
+      "answerable_retrieval_coverage": 0.0,
+      "unsupported_retrieval_abstention": 1.0,
+      "balanced_accuracy": 0.5,
+      "meets_targets": false
+    }
+  ],
+  "note": "Retrieval gate calibration only; generation may further abstain. Scores are not probabilities."
+}

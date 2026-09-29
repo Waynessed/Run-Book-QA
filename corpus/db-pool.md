@@ -1,12 +1,12 @@
 ---
 id: db-pool
-version: 1
+version: 2
 title: Database connection exhaustion
 ---
 # Database connection exhaustion
 
 ## Pool checks
-Check active and idle connections in pg_stat_activity and compare them with max_connections. Northstar API uses a pool maximum of 10 connections per replica. Multiply the pool maximum by the replica count and reserve 20 database connections for operations.
+Check active and idle connections in pg_stat_activity and compare them with max_connections. Northstar API uses a pool maximum of 6 connections per replica. Multiply the pool maximum by the replica count and reserve 20 database connections for operations.
 
 Look for idle-in-transaction sessions and missing connection release paths. Record query age, application name and transaction state. Do not terminate all database sessions; ask the database on-call to review a specific stuck session.
 

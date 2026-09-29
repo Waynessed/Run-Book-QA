@@ -11,6 +11,7 @@ test('supported answer opens actual source endpoint',async({page})=>{
  await page.locator('.citation').first().click();
  await expect(page.locator('.source blockquote')).toBeVisible();
  await expect(page.locator('.source pre')).toBeVisible();
+ if(process.env.REAL_MODEL){await page.screenshot({path:'../docs/assets/final-demo.png',fullPage:true});}
 });
 test('unsupported question abstains',async({page})=>{
  if(!process.env.REAL_MODEL){

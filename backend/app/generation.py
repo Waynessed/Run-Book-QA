@@ -22,7 +22,7 @@ def model_metadata():
         response = httpx.get(f"{OLLAMA_URL}/api/tags", timeout=5)
         response.raise_for_status()
         model = next(m for m in response.json()["models"] if m["name"] == MODEL)
-        if not model["digest"].startswith(MODEL_DIGEST):
+        if model["digest"] != MODEL_DIGEST:
             raise ModelError("Model digest differs from the pinned digest")
         return model
     except (httpx.HTTPError, StopIteration, KeyError) as exc:
@@ -33,7 +33,7 @@ def generate(question, passages):
     prompt = json.dumps({"question": question, "evidence": [{"id": p.id, "text": p.text} for p in passages]})
     schema = GeneratedAnswer.model_json_schema()
     schema["$defs"]["Claim"]["properties"]["citation_ids"]["items"]["enum"] = [p.id for p in passages]
-    prompt += "\nResponse schema: " + json.dumps(schema)
+    prompt = json.dumps({**json.loads(prompt), "response_schema": schema})
     error = None
     traces = []
     for attempt in range(2):

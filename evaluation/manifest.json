@@ -1,0 +1,605 @@
+{
+  "dataset_sha256": "b6748fb65e2e37324a8874c88398b146e421fcaf8abc90bcf0401d16ba1b29b7",
+  "cases": [
+    {
+      "id": "dev-a-01",
+      "group": "auth-401",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-02",
+      "group": "container-restarts",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-03",
+      "group": "db-pool",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-04",
+      "group": "deploy-rollback",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-05",
+      "group": "incident-escalation",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-06",
+      "group": "api-503",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-07",
+      "group": "image-pull",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-08",
+      "group": "api-429",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-09",
+      "group": "monitoring-latency",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-10",
+      "group": "secret-rotation",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-u-01",
+      "group": "unsupported-dev-u-01",
+      "split": "development",
+      "category": "unsupported"
+    },
+    {
+      "id": "dev-u-02",
+      "group": "unsupported-dev-u-02",
+      "split": "development",
+      "category": "unsupported"
+    },
+    {
+      "id": "dev-u-03",
+      "group": "unsupported-dev-u-03",
+      "split": "development",
+      "category": "unsupported"
+    },
+    {
+      "id": "dev-u-04",
+      "group": "unsupported-dev-u-04",
+      "split": "development",
+      "category": "unsupported"
+    },
+    {
+      "id": "dev-u-05",
+      "group": "unsupported-dev-u-05",
+      "split": "development",
+      "category": "unsupported"
+    },
+    {
+      "id": "dev-x-01",
+      "group": "auth-401",
+      "split": "development",
+      "category": "adversarial"
+    },
+    {
+      "id": "dev-x-02",
+      "group": "container-restarts",
+      "split": "development",
+      "category": "adversarial"
+    },
+    {
+      "id": "dev-x-03",
+      "group": "db-pool",
+      "split": "development",
+      "category": "adversarial"
+    },
+    {
+      "id": "dev-x-04",
+      "group": "deploy-rollback",
+      "split": "development",
+      "category": "adversarial"
+    },
+    {
+      "id": "dev-x-05",
+      "group": "incident-escalation",
+      "split": "development",
+      "category": "adversarial"
+    },
+    {
+      "id": "dev-a-11",
+      "group": "auth-401",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-12",
+      "group": "container-restarts",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-13",
+      "group": "db-pool",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-14",
+      "group": "deploy-rollback",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-15",
+      "group": "incident-escalation",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-16",
+      "group": "api-503",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-17",
+      "group": "image-pull",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-18",
+      "group": "api-429",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-19",
+      "group": "monitoring-latency",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-20",
+      "group": "secret-rotation",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-21",
+      "group": "deploy-canary",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-22",
+      "group": "deploy-canary",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-23",
+      "group": "job-duplicates",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-a-24",
+      "group": "job-duplicates",
+      "split": "development",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-01",
+      "group": "dns-failure",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-02",
+      "group": "dns-failure",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-03",
+      "group": "tls-expiry",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-04",
+      "group": "tls-expiry",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-05",
+      "group": "volume-full",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-06",
+      "group": "volume-full",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-07",
+      "group": "node-pressure",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-08",
+      "group": "node-pressure",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-09",
+      "group": "pending-pods",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-10",
+      "group": "pending-pods",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-11",
+      "group": "service-routing",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-12",
+      "group": "service-routing",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-13",
+      "group": "readiness-flaps",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-14",
+      "group": "readiness-flaps",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-15",
+      "group": "db-deadlocks",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-16",
+      "group": "db-deadlocks",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-17",
+      "group": "db-slow-query",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-18",
+      "group": "db-slow-query",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-19",
+      "group": "db-replica-lag",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-20",
+      "group": "db-replica-lag",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-21",
+      "group": "db-backup",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-22",
+      "group": "db-backup",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-23",
+      "group": "db-migration",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-24",
+      "group": "db-migration",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-25",
+      "group": "monitoring-missing",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-26",
+      "group": "monitoring-missing",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-27",
+      "group": "alert-noise",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-28",
+      "group": "alert-noise",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-29",
+      "group": "queue-backlog",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-30",
+      "group": "queue-backlog",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-31",
+      "group": "cache-stale",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-32",
+      "group": "cache-stale",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-33",
+      "group": "webhook-signature",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-34",
+      "group": "webhook-signature",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-35",
+      "group": "incident-handover",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "test-a-36",
+      "group": "incident-handover",
+      "split": "test",
+      "category": "answerable"
+    },
+    {
+      "id": "dev-u-06",
+      "group": "dev-unsupported-0",
+      "split": "development",
+      "category": "unsupported"
+    },
+    {
+      "id": "dev-u-07",
+      "group": "dev-unsupported-1",
+      "split": "development",
+      "category": "unsupported"
+    },
+    {
+      "id": "dev-u-08",
+      "group": "dev-unsupported-2",
+      "split": "development",
+      "category": "unsupported"
+    },
+    {
+      "id": "test-u-01",
+      "group": "test-unsupported-0",
+      "split": "test",
+      "category": "unsupported"
+    },
+    {
+      "id": "test-u-02",
+      "group": "test-unsupported-1",
+      "split": "test",
+      "category": "unsupported"
+    },
+    {
+      "id": "test-u-03",
+      "group": "test-unsupported-2",
+      "split": "test",
+      "category": "unsupported"
+    },
+    {
+      "id": "test-u-04",
+      "group": "test-unsupported-3",
+      "split": "test",
+      "category": "unsupported"
+    },
+    {
+      "id": "test-u-05",
+      "group": "test-unsupported-4",
+      "split": "test",
+      "category": "unsupported"
+    },
+    {
+      "id": "test-u-06",
+      "group": "test-unsupported-5",
+      "split": "test",
+      "category": "unsupported"
+    },
+    {
+      "id": "test-u-07",
+      "group": "test-unsupported-6",
+      "split": "test",
+      "category": "unsupported"
+    },
+    {
+      "id": "test-u-08",
+      "group": "test-unsupported-7",
+      "split": "test",
+      "category": "unsupported"
+    },
+    {
+      "id": "test-u-09",
+      "group": "test-unsupported-8",
+      "split": "test",
+      "category": "unsupported"
+    },
+    {
+      "id": "test-u-10",
+      "group": "test-unsupported-9",
+      "split": "test",
+      "category": "unsupported"
+    },
+    {
+      "id": "test-u-11",
+      "group": "test-unsupported-10",
+      "split": "test",
+      "category": "unsupported"
+    },
+    {
+      "id": "test-u-12",
+      "group": "test-unsupported-11",
+      "split": "test",
+      "category": "unsupported"
+    },
+    {
+      "id": "dev-x-06",
+      "group": "api-503",
+      "split": "development",
+      "category": "adversarial"
+    },
+    {
+      "id": "dev-x-07",
+      "group": "deploy-canary",
+      "split": "development",
+      "category": "adversarial"
+    },
+    {
+      "id": "dev-x-08",
+      "group": "job-duplicates",
+      "split": "development",
+      "category": "adversarial"
+    },
+    {
+      "id": "test-x-01",
+      "group": "dns-failure",
+      "split": "test",
+      "category": "adversarial"
+    },
+    {
+      "id": "test-x-02",
+      "group": "tls-expiry",
+      "split": "test",
+      "category": "adversarial"
+    },
+    {
+      "id": "test-x-03",
+      "group": "volume-full",
+      "split": "test",
+      "category": "adversarial"
+    },
+    {
+      "id": "test-x-04",
+      "group": "node-pressure",
+      "split": "test",
+      "category": "adversarial"
+    },
+    {
+      "id": "test-x-05",
+      "group": "pending-pods",
+      "split": "test",
+      "category": "adversarial"
+    },
+    {
+      "id": "test-x-06",
+      "group": "service-routing",
+      "split": "test",
+      "category": "adversarial"
+    },
+    {
+      "id": "test-x-07",
+      "group": "readiness-flaps",
+      "split": "test",
+      "category": "adversarial"
+    },
+    {
+      "id": "test-x-08",
+      "group": "db-deadlocks",
+      "split": "test",
+      "category": "adversarial"
+    },
+    {
+      "id": "test-x-09",
+      "group": "db-slow-query",
+      "split": "test",
+      "category": "adversarial"
+    },
+    {
+      "id": "test-x-10",
+      "group": "db-replica-lag",
+      "split": "test",
+      "category": "adversarial"
+    },
+    {
+      "id": "test-x-11",
+      "group": "webhook-signature",
+      "split": "test",
+      "category": "adversarial"
+    },
+    {
+      "id": "test-x-12",
+      "group": "incident-handover",
+      "split": "test",
+      "category": "adversarial"
+    }
+  ]
+}
