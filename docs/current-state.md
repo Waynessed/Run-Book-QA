@@ -7,7 +7,7 @@ Resumed 2026-09-29 12:24 UTC from local pause checkpoint 5579119. Code checkpoin
 - RQ-00/RQ-01: first real local model demo delivered early. UI http://127.0.0.1:5174; API http://127.0.0.1:8081. Real browser supported-answer/source/abstention checks passed; the browser error scenario used a deterministic fixture.
 - RQ-02: thirty original runbooks, one hundred grouped labels (40 development / 60 test), atomic db-pool v1 -> v2 replacement verified, original source characters preserved in chunks.
 - RQ-03 partially complete: keyword, semantic and hybrid retrieval, reranking, shared confidence gate, conditional generation schema and raw failed-response traces implemented. Full development comparison remains incomplete.
-- Latest backend/database/API/evaluation suite: 21 passed in 7.11s. Deterministic browser suite: 3 passed in 7.4s. No new tests were needed for this documentation-only pause checkpoint.
+- Latest backend/database/API/evaluation suite: 21 passed in 7.11s. Updated deterministic browser suite: 4 passed in 12.3s, including reviewed/unreviewed comparison provenance. No new tests were needed for this documentation-only pause checkpoint.
 - Development retrieval calibration: threshold 0.7685428857803345; 24/24 answerable accepted and 8/8 unsupported rejected. These are retrieval-gate measurements, not generation accuracy.
 - Real conditional-schema smoke: correct cited issuer/audience claim, empty reason, zero repairs, 27,903.59 ms. Forced irrelevant-evidence generation: abstained, zero claims, zero repairs, 12,390.17 ms. Reports retain raw traces.
 
@@ -17,7 +17,7 @@ The earlier ca7857d diagnostic run was interrupted after 31 saved outputs for re
 
 The corrected development run at e31a76f was stopped with SIGTERM at the user's request. Its host evaluation script exited with `Evaluation failed` because of that intentional stop. No completed case or new pending/final report was saved from this corrected run. A process check at the pause confirmed zero active evaluation processes. On resumption, Docker services and the pinned model were ready with 61 indexed chunks. The fresh development evaluator is now active; keep its backend, corpus and settings fixed.
 
-RQ-04 has not started: configuration is not frozen, held-out generation has not run, final semantic scores and final demo package remain pending. The frontend image was rebuilt on resumption, including the committed comparison columns. Compose also recreated API before evaluation began; an immediate readiness request raced startup and failed, then the subsequent readiness check succeeded. Whole-script bootstrap and remote CI have not been verified as successful.
+RQ-04 has not started: configuration is not frozen, held-out generation has not run, final semantic scores and final demo package remain pending. The frontend image was rebuilt on resumption, including the committed comparison columns. Compose also recreated API before evaluation began; an immediate readiness request raced startup and failed, then the subsequent readiness check succeeded. Whole-script bootstrap has not yet been verified end to end. Remote engineering CI passed at e31a76f and 167cbc7.
 
 ## Launch and next steps
 
