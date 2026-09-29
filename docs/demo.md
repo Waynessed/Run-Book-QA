@@ -6,7 +6,7 @@ Try API 401, container restarting, exhausted database connections, rollback and 
 
 Troubleshooting: `docker compose ps`, `docker compose logs api ollama`. First model downloads need internet and several GB of disk; use a CPU host with at least 8 GB available RAM (16 GB recommended). Generation timeout is 120 seconds per attempt. No GPU or paid API required. Docker Desktop must be running.
 
-Document update and measured comparisons will be added after verification.
+The document replacement has been verified. A full measured comparison is being executed; until its final report is saved, the UI has no aggregate results to show.
 ## Document replacement demo
 Run `./scripts/document-update.ps1`. The original db-pool version 1 advised a pool maximum of ten; version 2 advises six. The script ingests the update and checks current source and every active chunk for version 2 and absence of the obsolete phrase. The repository now contains the demonstrated version 2. The replacement regression test independently creates disposable version 1/2 fixtures on every test run.
 

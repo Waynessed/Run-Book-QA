@@ -76,3 +76,7 @@ At code checkpoint e31a76f, both conditional-schema branches were verified with 
 `evaluation.evaluate` saves partial progress after each completed case, but has no resume-from-partial option. On resumption, run a fresh development comparison and preserve its raw report before semantic review. Annotation templates bind to the exact report filename and SHA-256; `scripts/apply-annotations.py` checks that identity and writes a separate reviewed report. Applying annotations to a completed run has not yet been exercised.
 
 The threshold's 24/24 answerable acceptance and 8/8 unsupported rejection describe retrieval gating only. Full answer correctness, supporting-claim rate, adversarial outcomes and latency comparison still require the complete run. Configuration freeze, held-out generation and the final demo package are subsequent work. See current-state.md for launch commands and step-index.md for historical revision references.
+
+## Resumed comparison
+
+The user resumed work from 5579119. A fresh serial development comparison is running with the corrected e31a76f backend. `scripts/inspect-evaluation.py` formats existing report rows and exactly attached evidence for semantic inspection; it does not judge outputs or modify raw files. Final annotations bind to the completed raw report, even when provisional inspection began from pending progress.

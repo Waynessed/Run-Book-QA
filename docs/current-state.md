@@ -1,6 +1,6 @@
-# Current state — paused at user request
+# Current state — resumed development comparison
 
-Saved 2026-09-29 06:47 UTC. Code checkpoint e31a76f is pushed to https://github.com/Waynessed/Run-Book-QA on codex/runbookqa. This documentation checkpoint is a subsequent local commit; resolve its hash with `git log -1`. No implementation or evaluation is continuing automatically.
+Resumed 2026-09-29 12:24 UTC from local pause checkpoint 5579119. Code checkpoint e31a76f is pushed to https://github.com/Waynessed/Run-Book-QA on codex/runbookqa. The user requested continuing the remaining stages. The corrected full development comparison is now running from 5579119.
 
 ## Completed and verified
 
@@ -11,15 +11,15 @@ Saved 2026-09-29 06:47 UTC. Code checkpoint e31a76f is pushed to https://github.
 - Development retrieval calibration: threshold 0.7685428857803345; 24/24 answerable accepted and 8/8 unsupported rejected. These are retrieval-gate measurements, not generation accuracy.
 - Real conditional-schema smoke: correct cited issuer/audience claim, empty reason, zero repairs, 27,903.59 ms. Forced irrelevant-evidence generation: abstained, zero claims, zero repairs, 12,390.17 ms. Reports retain raw traces.
 
-## Evaluation stop and preserved evidence
+## Evaluation history and active run
 
 The earlier ca7857d diagnostic run was interrupted after 31 saved outputs for response-contract corrections. Its tracked raw archive is `reports/development-diagnostic-20260929.json`; partial semantic inspection is `reports/development-diagnostic-annotations.json`. The old ignored `.pending.json` is also still present. These are diagnostic evidence, not a completed comparison.
 
-The corrected development run at e31a76f was stopped with SIGTERM at the user's request. Its host evaluation script exited with `Evaluation failed` because of that intentional stop. No completed case or new pending/final report was saved from this corrected run. A process check confirmed zero active evaluation processes. Docker API, web, PostgreSQL and Ollama services remain running; models and the active index remain available.
+The corrected development run at e31a76f was stopped with SIGTERM at the user's request. Its host evaluation script exited with `Evaluation failed` because of that intentional stop. No completed case or new pending/final report was saved from this corrected run. A process check at the pause confirmed zero active evaluation processes. On resumption, Docker services and the pinned model were ready with 61 indexed chunks. The fresh development evaluator is now active; keep its backend, corpus and settings fixed.
 
-RQ-04 has not started: configuration is not frozen, held-out generation has not run, final semantic scores and final demo package remain pending. The latest frontend comparison columns are committed but the running web image needs rebuilding. Whole-script bootstrap and remote CI have not been verified as successful.
+RQ-04 has not started: configuration is not frozen, held-out generation has not run, final semantic scores and final demo package remain pending. The frontend image was rebuilt on resumption, including the committed comparison columns. Compose also recreated API before evaluation began; an immediate readiness request raced startup and failed, then the subsequent readiness check succeeded. Whole-script bootstrap and remote CI have not been verified as successful.
 
-## Resume
+## Launch and next steps
 
 Read `AGENTS.md`, `RUNBOOKQA_HANDOFF.md`, this record, the implementation log and walkthrough; check Git status before edits. From the repository directory:
 
