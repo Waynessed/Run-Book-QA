@@ -1,14 +1,21 @@
-# Evaluation report — incomplete at pause
+# Evaluation report — development checkpoint
 
-As of 2026-09-29, no complete three-mode generation comparison or held-out evaluation exists. Handoff targets remain goals. The final 100-case grouped dataset is in evaluation/dataset.json; rubric and review instructions are in docs/scoring-rubric.md and docs/review.md.
+## First complete comparison, before instruction validation correction
 
-| Executed check | Observed result | Evidence |
-|---|---|---|
-| Development retrieval-gate calibration | Threshold 0.7685428857803345; 24/24 answerable accepted, 8/8 unsupported rejected | reports/calibration.json |
-| Real conditional-schema supported smoke | Correct cited issuer/audience claim; empty reason; zero repairs; 27,903.59 ms | reports/conditional-schema-smoke-answer.json |
-| Real forced irrelevant-evidence smoke | Abstained; zero claims; zero repairs; 12,390.17 ms | reports/conditional-schema-forced-abstention.json |
-| Earlier development diagnostic | 31 saved outputs, intentionally interrupted; semantic failures inspected | reports/development-diagnostic-20260929.json; reports/development-diagnostic-annotations.json |
+Run: development-20260929T122416Z; Git 5579119; same corpus, dataset, generator and settings for all modes. Forty cases per mode, 120 outputs. Raw report: reports/development-20260929T122416Z.json. Recorded rubric annotations: reports/development-20260929T122416Z-annotations.json. Reviewed report: reports/development-20260929T122416Z-reviewed.json.
 
-Calibration measures retrieval acceptance, not answer correctness. Smoke timings are individual requests, not aggregate median/p95. Diagnostic annotations are implementing-assistant inspection, not independent human ground truth. See docs/development-findings.md for six analysed examples.
+| Mode | Recall@5 | Fact score | Claim support | Valid citation IDs | Unsupported abstention | Answerable coverage | Adversarial failures | Median / p95 seconds | Errors |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Keyword | 87.5% | 65.0% | 90.5% | 100% | 100% | 91.7% | 1/8 | 25.6 / 50.9 | 0 |
+| Semantic | 100% | 71.3% | 93.3% | 100% | 100% | 91.7% | 1/8 | 15.0 / 42.6 | 1 |
+| Hybrid | 100% | 70.0% | 93.9% | 100% | 100% | 95.8% | 3/8 | 23.2 / 52.9 | 1 |
 
-The corrected e31a76f development run was stopped at the user's request before saving a case. Next: fresh complete development comparison, report-bound semantic annotation, freeze, explicitly allowed held-out run and final comparison table. Raw errors and repairs remain part of the reported outcomes.
+Fact score averages the fixed 0/0.5/1 rubric over all forty labelled cases, including unsupported and adversarial cases. Claim support counts generated claims only. IDs being valid does not establish support or correct instruction handling. Review was performed by the implementing assistant with source inspection; it is model-assisted semantic review, not independent human ground truth.
+
+Hybrid improved retrieval and delivery coverage but regressed on instruction-following failures. An imported unapproved note was copied into answers. Semantic and hybrid each had a latency-question error after two 300-token responses ended as incomplete JSON. Generic boilerplate and irrelevant extra advice also appeared; see docs/development-findings.md and individual annotation notes. Concurrent frontend builds/checks on the shared CPU host may influence timings; these are local end-to-end measurements, not an isolated benchmark.
+
+Development retrieval calibration separately accepted 24/24 answerable and rejected 8/8 unsupported cases at threshold 0.7685428857803345 (reports/calibration.json). That gate measurement is not generation accuracy.
+
+## Next
+
+A development-only correction will add a narrow instruction-override output validator, safer public trace/error handling, stronger relevant-evidence prompting and a bounded generation-budget adjustment. A fresh full comparison will verify that configuration before freeze. No held-out generation or configuration freeze has occurred. Handoff targets remain goals.

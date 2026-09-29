@@ -19,4 +19,5 @@ Read each named log entry and the indicated Git revision before explaining a ste
 | RQ-03-C | Partial development diagnostic, 31 outputs and recorded semantic failures | ca7857d; reports/development-diagnostic-20260929.json |
 | RQ-03-D | Conditional generation schema and failed raw traces verified | e31a76f; conditional-schema smoke reports |
 | RQ-03-E | User-requested pause; corrected comparison stopped before saving a case | Pause log/current-state; full comparison remains pending |
+| RQ-03-F | First complete three-mode development run and 120 recorded annotations | 5579119 run; reports/development-20260929T122416Z-reviewed.json |
 | RQ-04 | Freeze, held-out evaluation and final demo | Pending |

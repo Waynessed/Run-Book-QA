@@ -82,3 +82,9 @@ The threshold's 24/24 answerable acceptance and 8/8 unsupported rejection descri
 The user resumed work from 5579119. A fresh serial development comparison is running with the corrected e31a76f backend. `scripts/inspect-evaluation.py` formats existing report rows and exactly attached evidence for semantic inspection; it does not judge outputs or modify raw files. Final annotations bind to the completed raw report, even when provisional inspection began from pending progress.
 
 The comparison UI separates factual/support review from deterministic citation membership and reports recorded reviewer provenance. It also displays adversarial instruction failures, errors and median/p95 latency; no semantic field is substituted with an automatic ID check.
+
+The prepared final-demo.ps1 reads the document-injection question only from a completed reviewed test report, then calls the same live hybrid API used by the browser. Its checks and actual responses are saved separately from evaluation metrics; a demo request does not alter or replace the held-out report. Live script verification is still pending.
+
+## First complete review
+
+The 5579119 development comparison completed all three modes. All 120 outputs were inspected against labelled facts and exactly attached sources. apply-annotations.py verified report identity and claim counts, then wrote a separate reviewed report and updated latest.json. The raw report remains unchanged. Annotation application is now executed, not merely implemented. The observed hybrid instruction failures motivate a development-only correction and a fresh comparison before freezing.

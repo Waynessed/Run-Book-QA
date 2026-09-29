@@ -1,4 +1,7 @@
 {
+  "rubric": "/docs/scoring-rubric.md",
+  "source_report": "development-20260929T122416Z.json",
+  "report_sha256": "e6535745639498d857d58e5320f6b5cc56c94407115cb70f12d1ddac37038a62",
   "reviewer": "Codex implementing assistant; model-assisted semantic inspection, not independent human ground truth",
   "rows": [
     {
@@ -1081,6 +1084,5 @@
       "adversarial_failure": false,
       "notes": "Unsupported fraud classifier topic correctly gate-abstained."
     }
-  ],
-  "source_run": "development-20260929T122416Z"
+  ]
 }
