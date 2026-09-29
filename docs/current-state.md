@@ -1,38 +1,35 @@
-# Current state — development reviewed; ready to freeze
+# Current state — paused at user request
 
-Code checkpoint c526532 committed and pushed to Waynessed/Run-Book-QA, branch codex/runbookqa. The user resumed from pause checkpoint 5579119. First local demo was delivered before corpus expansion. UI http://127.0.0.1:5174; API http://127.0.0.1:8081.
+Pause checkpoint: 2026-09-29 15:12 UTC (2026-09-30 Sydney). The checkpoint commit is the repository HEAD, recorded by `git log -1`. Frozen evaluation revision: 39bc6969de03549d1cf5d7e7d86aee1a21496ffc; model/validator code checkpoint c526532. User authorized pushes to Waynessed/Run-Book-QA on codex/runbookqa.
 
-## Current stage
+## Completed and preserved
 
-RQ-00/RQ-01 working real local demo and RQ-02 corpus/dataset/atomic replacement are verified. RQ-03 first full comparison at 5579119 completed and received 120 recorded rubric annotations. Its hybrid results: Recall@5 100%, fact score 70%, claim support 93.9%, answerable coverage 23/24, unsupported abstention 8/8, three instruction-following failures, one model error. Raw/reviewed reports and all annotations remain under reports/development-20260929T122416Z.*. These are development results, not held-out achievements.
+RQ-00/RQ-01 real local model demo, RQ-02 30 runbooks/100 grouped labels/atomic replacement, and RQ-03 complete development comparisons and calibrated abstention are verified. Corrected development run c526532 has all 120 applied annotations and raw/reviewed reports.
 
-The observed directive copying and 300-token JSON truncation motivated c526532: narrow instruction-override validators for claims/reasons, stronger evidence/relevance prompt, claim cap 350 characters, generation budget 400 tokens, safe POST answer trace/error metadata and separate policy-rejection metrics. Corpus, dataset, retrieval ordering and threshold are unchanged. No general injection-resistance claim.
+RQ-04 held-out generation **completed just before this pause**. All 180 real outputs are saved in reports/test-20260929T140703Z.json; its final unchanged-file/corpus checks passed and host evaluator exited zero. Docker Compose top confirms only API startup/uvicorn remain, no evaluator. The initial process check using ps failed because the slim container lacks ps; Docker top supplied the actual confirmation. Demo services remain running at http://127.0.0.1:5174 and API http://127.0.0.1:8081.
 
-The fresh c526532 development comparison completed and all 120 report-bound annotations were applied. Hybrid Recall@5 100%, fact score 80%, support 92.9%, answerable coverage 24/24, unsupported abstention 8/8, zero delivered instruction failures, two explicit errors and four rejected raw directive attempts. Keyword/semantic fact scores 70%/81.25%; support 92%/92.98%. Zero malformed-output attempts in all modes. Raw generator instruction failures remain; the guard blocks delivery in the two error cases. Next: commit this reviewed checkpoint, freeze unchanged backend/corpus/retrieval/generation settings and run held-out evaluation. RQ-04 freeze/test has not begun. Final demo live execution awaits reviewed test results.
+Raw held-out measurements for keyword/semantic/hybrid: Recall@5 35/36 (97.22%) each; unsupported abstention 12/12 each; answerable coverage 34/36, 35/36, 35/36; citation-ID membership 100%; explicit errors 2, 1, 1; rejected directive attempts 4, 2, 2; malformed-output attempts zero. Hybrid has one delivered exact-marker/quoted-instruction failure (test-x-07). Never describe the system as generally injection-resistant.
 
-## Verification
+## Review and remaining work
 
-- Backend/database/API/evaluation: 33 tests passed in 11.50s; one locked upstream AnyIO deprecation warning.
-- Frontend build and 4 deterministic browser tests passed (11.3s), including review provenance and rejected-directive display.
-- Real correction smoke: supported 401 and mixed-injection 401 both answered with correct P1 citations, zero repairs (83.2s cold/shared build; 29.1s warm). Previously truncated latency case returned complete JSON in 57.4s, zero repairs; extra irrelevant text and a capped fragment remain limitations. Raw traces: reports/development-correction-smoke.json.
-- Whole cached-stack bootstrap passed: exact Qwen digest ready, embedding/reranker loaded, ingestion changed=0/unchanged=30, 61 chunks ready. Original downloads were verified earlier; a clean empty-machine full run has not been repeated.
-- Atomic db-pool v1 -> v2 replacement verified; current pool maximum six; old current guidance removed. Source characters preserved.
-- Development retrieval gate threshold 0.7685428857803345 accepted 24/24 answerable and rejected 8/8 unsupported cases. This is gate calibration, not answer correctness.
-- First real browser supported/source/abstention checks passed earlier; browser error scenario uses a fixture. Remote CI at c526532 passed (GitHub Actions run 36574536932).
+**177/180 semantic annotations are recorded but the held-out annotation application is not complete.** The report-bound annotation file now preserves those 177 values and leaves three rows null. Working notes: reports/test-review-working.json. Remaining: hybrid test-a-33, test-a-34, test-x-11. Do not invent their semantic scores. Raw latest.json exposes pending semantic review; no reviewed test report exists yet.
 
-## Commands
+Keyword/semantic provisional source-inspected fact scores are 79.17%/82.5% and support 91.67%/95.65%; these are not yet published through the all-row annotation helper. Hybrid support/fact aggregate remains unfinalized. docs/held-out-findings.md records failures, including the quoted directive bypass, wrong citations, missed facts and relevance-gate false negatives.
 
-From the repository directory:
+Resume by reviewing the three remaining saved outputs, then applying the exact report-bound annotations with scripts/apply-annotations.py. No new evaluation is needed to finish this review. Keep the frozen settings unchanged; no tuning followed test exposure. Final REAL_MODEL browser run/screenshot, live scripts/final-demo.ps1 and complete final documentation/package remain unexecuted. The script is syntax checked and now saves explicit HTTP failures. Earlier real browser demo and current deterministic browser checks were executed separately.
 
-```powershell
-./scripts/bootstrap.ps1
-./scripts/demo.ps1
-./scripts/test.ps1
-./scripts/evaluate.ps1 -Split development
-```
+## Verified engineering checks
 
-The evaluator starts a fresh complete run; it does not resume partial files. Inspect records and Git status before edits. Current progress files are atomic *.pending.json files (ignored by Git); archive them explicitly if a future pause interrupts the run. The historical 31-output ca7857d diagnostic is already tracked separately. The e31a76f corrected run stopped at the prior user pause before saving any cases.
+- 33 backend/database/API/evaluation tests passed; four deterministic Playwright scenarios and frontend build passed.
+- Three real correction smoke checks and complete cached bootstrap passed; active index contains 30 documents and 61 chunks.
+- Atomic db-pool v1 -> v2 update verified: current pool maximum six, obsolete current guidance removed.
+- GitHub Actions passed at frozen revision 39bc696 (run 36580172289), and at code checkpoint c526532.
+- CPU runtime: 8 CPUs and about 7.6 GiB assigned to Docker; pinned Qwen 2.5 1.5B Q4_K_M, embedding/reranker revisions, images and dependency locks.
 
-After a reviewed development run and committed final settings: `./scripts/evaluate.ps1 -Freeze -Split test -AllowHeldOut`. Do not tune using test outputs. Apply report-bound annotations with scripts/apply-annotations.py; inspect claims/evidence with scripts/inspect-evaluation.py. Final demo: ./scripts/final-demo.ps1, only after a complete reviewed test report.
+## Launch and reproduction
 
-Runtime pins: config/runtime.json, backend/app/settings.py, dependency locks, Compose and Dockerfiles. Observed resources: 8 CPUs, 7.6 GiB, CPU Qwen 1.5B Q4_K_M. Corpus fingerprint f52a788b7c3a40916d84fe801640d03dda8f70a3aceb7dc1fa5c16ea88d47b53; dataset fingerprint d3b4b55d75919d8a7dfa34230f7d2fd907b658284b7040243ecaca61ef9d04c4.
+After reading records: `./scripts/bootstrap.ps1`, then `./scripts/demo.ps1`; open http://127.0.0.1:5174. First launch downloads models. Do not restart or reindex merely to finish annotation of saved outputs.
+
+The original frozen manifest is reports/freeze.json and belongs to Git 39bc696. This pause commit changes documentation/report records only. Future measurement at a later HEAD must intentionally archive/preserve the original freeze and freeze the unchanged configuration again, or use the original frozen revision; it is a repeat measurement after exposure, not a new blind benchmark. Never tune on test outputs. Evaluator has no partial-run resume, but this run is already complete.
+
+Resume-oriented portfolio wording is saved in docs/resume-entry.md. It uses only verified implementation and structural metrics; no final answer-accuracy, production, scalability, AWS or deployment claim.

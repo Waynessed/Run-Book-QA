@@ -1,0 +1,40 @@
+{
+  "date": "2026-09-29T14:06:55.259876+00:00",
+  "git_commit": "39bc6969de03549d1cf5d7e7d86aee1a21496ffc",
+  "files": {
+    "app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/cli.py": "1dfc1cff5c8c6dcc1038657d3810f247674999f943e857428fb6b755b77655c9",
+    "app/db.py": "92ebd5d57347982a1152a8c36fd9f989fc83376ccff331e8b4681ba208f6906b",
+    "app/evaluation.py": "b999e8131cbb8873627aca573ab63480dce6c8c333b3490e9b5d6a6f6d2c9b8b",
+    "app/generation.py": "636024b58f7f6ada940a91e7b90c1443dcaaa830de4a339b7afe341634348f08",
+    "app/ingest.py": "cc56db258d6e720249ff9f4c570cd7e250d496b9e9fccf0a481ef30a48021d7d",
+    "app/main.py": "96fe79b4c0d30a611c4f88b1adcbef268190db7edc02eabb65e8ff2b38f14a73",
+    "app/models.py": "88233db7a797d742579ccc74a0e9b4660b043c0dc49f5576f88eb860bbc45526",
+    "app/retrieval.py": "8d66a1649fdc3f8644fb53afcb1e5fdc72bdcdc5f183083f58d220eb2a1c6ed8",
+    "app/schemas.py": "77104b281b09193b6de0624d2578728fd57120da69661501648552a8aa4792ca",
+    "app/service.py": "5b2228e5fa950aed0e89e731e480e31f18fac7723e53914c2f504ed2eab09880",
+    "app/settings.py": "4b128102f5557286ce5d0af32289d94a90ac0e7d3ccf65e2674a64ec81ad6245",
+    "requirements.lock": "ccdf7ee8d46a77c87dc0531f41b6945d68efb93d3c48911a12b1f7a0e93ed06e",
+    "retrieval.json": "045ec1a70ea279953ba0782fe8932a48f40857e9bb65b0e7e6d13ca34bdd83a8",
+    "dataset.json": "d3b4b55d75919d8a7dfa34230f7d2fd907b658284b7040243ecaca61ef9d04c4",
+    "corpus_files": "cd7b823ef6de952f2076ac19a2b37113aaef39417d9fc74cb737e2f83d54a85b"
+  },
+  "corpus_hash": "f52a788b7c3a40916d84fe801640d03dda8f70a3aceb7dc1fa5c16ea88d47b53",
+  "generator": {
+    "name": "qwen2.5:1.5b",
+    "model": "qwen2.5:1.5b",
+    "modified_at": "2026-09-29T13:20:19.268882645Z",
+    "size": 986061892,
+    "digest": "65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    }
+  }
+}

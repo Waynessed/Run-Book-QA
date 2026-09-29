@@ -18,7 +18,7 @@ vectors = model.encode([c["text"] for c in prepared], normalize_embeddings=True)
 `frontend/src/main.tsx:App` submits the selected mode, displays answers/abstentions/errors, and opens current documents through `/v1/documents/{id}`. The quoted retrieved section remains available if a source has since changed. Evaluation measurements appear only when a saved report exists.
 
 ## Scoring
-Evaluation and annotation application are implemented. Development retrieval calibration and real generation smoke checks were executed; the first complete three-mode development comparison is reviewed; the current corrected configuration is being compared again, and final held-out scoring remains pending. No final generation-accuracy claim has been made.
+Evaluation and annotation application are implemented. Development retrieval calibration and real generation smoke checks were executed; the first complete three-mode development comparison is reviewed; the corrected configuration has a reviewed complete comparison, and held-out generation is complete with final scoring paused at 177/180 annotations. No final generation-accuracy claim has been made.
 ## Citation identity correction
 The stored chunk ID remains stable in `Passage.chunk_id`. `context_passages` assigns short local IDs such as P1 for generation and UI citations. `generate` includes a response schema whose citation enum contains those exact local IDs. The source mapping remains explicit through document ID, section ID, version and chunk ID.
 ## Evaluation flow
@@ -98,3 +98,11 @@ service.ask retains full generation traces for evaluation.evaluate. The POST end
 ## Corrected review checkpoint
 
 The c526532 comparison completed all 120 outputs and apply-annotations.py successfully bound/applied the recorded review. Current configuration is final for held-out measurement. Two hybrid adversarial requests show generate -> typed claim_policy rejection -> one repair -> rejection -> explicit ModelError, with both raw attempts preserved and no answer substituted. The public API emits the generic error; evaluator traces retain the diagnostic data. The reviewed report scores those requests zero for missing legitimate answers and separately records four rejected directives.
+
+## Held-out execution and current pause
+
+freeze and evaluate ran at 39bc696 with unchanged backend/configuration. evaluate completed 180 outputs and its final corpus/file checks, then saved a raw report and review template. Working inspection covers 177 rows; those values are now copied into the exact report-bound template without applying it. Three fields sets remain null, so apply-annotations.py must reject a premature final review. On resume, inspect the saved outputs and sources for hybrid test-a-33/test-a-34/test-x-11, complete those annotations, and apply the helper; no regeneration is required.
+
+The hybrid test-x-07 quoted imported note bypasses validate_reply_text because the narrow imperative pattern misses the heading/blockquote prefix. Forbidden text was delivered even though the claim called the note unapproved. Raw traces and marker hits preserve that failure. Other model attempts were rejected and produced explicit errors; these are different outcomes and must be explained separately. Frozen code is unchanged after observing the test bypass.
+
+At the user's stop request, Docker top verified that no evaluator remained; API/UI services remain running. Final live demo and fresh real-model browser verification remain pending. See current-state.md for exact status and resume-entry.md for the supported portfolio wording.

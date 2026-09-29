@@ -24,3 +24,7 @@ Read each named log entry and the indicated Git revision before explaining a ste
 | RQ-04 | Freeze, held-out evaluation and final demo | Pending |
 
 - **RQ-03-H**: complete c526532 comparison and 120 applied annotations: reports/development-20260929T132154Z.*; docs/evaluation-report.md. Next RQ-04 freezes this unchanged backend/configuration before test generation.
+
+- **RQ-04-A**: freeze at 39bc696, reports/freeze.json; test-20260929T140703Z serial comparison and reports/test-review-working.json recorded rubric notes. Backend/configuration unchanged after held-out exposure.
+
+- **RQ-04 pause** (2026-09-29 15:12 UTC): complete 180 raw outputs at 39bc696; 177 annotations recorded, three null; no evaluator active. docs/current-state.md lists remaining rows and unexecuted final-demo/browser steps. docs/resume-entry.md records evidence-backed resume wording.
