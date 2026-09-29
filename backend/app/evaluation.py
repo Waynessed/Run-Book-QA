@@ -51,7 +51,8 @@ def freeze():
     config=json.loads(CONFIG_PATH.read_text())
     if config['threshold'] is None:
         raise ValueError('Calibrate before freezing')
-    manifest={'date':datetime.now(timezone.utc).isoformat(),'git_commit':os.getenv('GIT_COMMIT','unknown'),'files':file_manifest()}
+    with Session() as session: frozen_corpus=corpus_version(session)
+    manifest={'date':datetime.now(timezone.utc).isoformat(),'git_commit':os.getenv('GIT_COMMIT','unknown'),'files':file_manifest(),'corpus_hash':frozen_corpus,'generator':model_metadata()}
     save_json(REPORT_PATH/'freeze.json',manifest)
     return manifest
 
@@ -106,6 +107,7 @@ def evaluate(split):
         if frozen['git_commit']!=os.getenv('GIT_COMMIT'):raise ValueError('Git revision differs from frozen manifest')
     cases=sorted(load_cases(split),key=lambda c:(c['group'],c['id']))
     with Session() as s: corpus_hash=corpus_version(s)
+    if split=='test' and frozen['corpus_hash']!=corpus_hash: raise ValueError('Active index differs from frozen corpus')
     report={'status':'running','date':datetime.now(timezone.utc).isoformat(),'split':split,
             'git_commit':os.getenv('GIT_COMMIT','unknown'),'corpus_hash':corpus_hash,
             'dataset_hash':digest(DATASET_PATH.read_text()),'manifest':file_manifest(),
@@ -140,6 +142,9 @@ def evaluate(split):
             save_json(path.with_suffix('.pending.json'),report)
             print(f'{split} {mode} {c["id"]}: {row.get("output",{}).get("status", "error")} ({row["latency_ms"]:.0f} ms)',flush=True)
         report['modes'][mode]=metric_rows([r for r in report['rows'] if r['mode']==mode])
+    with Session() as session:
+        if corpus_version(session)!=corpus_hash: raise ValueError('Corpus changed during evaluation; partial outputs retained, final report rejected')
+    if report['manifest']!=file_manifest(): raise ValueError('Configuration changed during evaluation; final report rejected')
     report['status']='complete'
     save_json(path,report);save_json(REPORT_PATH/'latest.json',report)
     annotations=[{'mode':r['mode'],'case_id':r['case_id'],'fact_correctness':None,'supported_claims':None,'claim_count':len(r.get('output',{}).get('claims',[])),'adversarial_failure':None,'notes':''} for r in report['rows']]

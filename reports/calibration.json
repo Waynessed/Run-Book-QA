@@ -1,6 +1,10 @@
 {
-  "date": "2026-09-29T06:15:24.253869+00:00",
+  "date": "2026-09-29T06:24:38.994900+00:00",
   "split": "development",
+  "corpus_hash": "f52a788b7c3a40916d84fe801640d03dda8f70a3aceb7dc1fa5c16ea88d47b53",
+  "dataset_hash": "d3b4b55d75919d8a7dfa34230f7d2fd907b658284b7040243ecaca61ef9d04c4",
+  "git_commit": "1003baeb5eff44831a822e10e416ce75071a3b09",
+  "model_revision": "233902d25c440f23af6f7d6e94d2946bac0bee0a",
   "selected": {
     "threshold": 0.7685428857803345,
     "answerable_retrieval_coverage": 1.0,

@@ -76,3 +76,8 @@ Added API boundary/503 tests and evaluation denominator tests (universal abstent
 A recalibration attempt was interrupted when API restart terminated its docker-exec process. The host script reported Calibration failed; no successful new report or threshold application was claimed. Re-running after restart/tests finish. Avoid restarting the API or changing corpus while an in-container evaluation/calibration process is active.
 
 Measured development comparison and semantic review are pending. Retrieval calibration's preliminary 100%/100% scores must not be presented as generation accuracy.
+## RQ-03 calibration verified / 2026-09-29 UTC
+
+Stable final-corpus calibration completed: threshold 0.7685428857803345, answerable retrieval-gate coverage 24/24, unsupported retrieval-gate abstention 8/8, balanced accuracy 1.0. Corpus fingerprint f52a788b7c3a40916d84fe801640d03dda8f70a3aceb7dc1fa5c16ea88d47b53; dataset fingerprint d3b4b55d75919d8a7dfa34230f7d2fd907b658284b7040243ecaca61ef9d04c4; calibration source revision 1003bae. Full threshold sweep and scores saved in reports/calibration.json; host script applied the threshold to config/retrieval.json. These measurements exclude generation.
+
+Strengthened freeze/evaluation provenance: freeze records the active database corpus fingerprint and exact model metadata. Held-out checks require the active index to match; all evaluations reject source/configuration/corpus changes during the run while preserving partial outputs. Preparing the first full development comparison; prompt/configuration now fixed for that run.

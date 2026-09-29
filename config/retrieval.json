@@ -1,1 +1,8 @@
-{"threshold": null, "frozen": false, "rrf_k": 60, "candidates": 20, "context_passages": 3, "context_tokens": 1200}
+{
+  "threshold": 0.7685428857803345,
+  "frozen": false,
+  "rrf_k": 60,
+  "candidates": 20,
+  "context_passages": 3,
+  "context_tokens": 1200
+}
