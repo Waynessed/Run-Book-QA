@@ -27,7 +27,7 @@ def retrieve(session, question: str, mode: str, limit: int = 5) -> list[Passage]
     for identity, score in candidates:
         chunk = session.get(Chunk, identity)
         doc = session.get(Document, chunk.document_id)
-        passages.append(Passage(id=identity, document_id=doc.id, title=doc.title, version=chunk.version,
+        passages.append(Passage(id=identity, chunk_id=identity, document_id=doc.id, title=doc.title, version=chunk.version,
                                 heading=chunk.heading, section_id=chunk.section_id, text=chunk.text, score=float(score)))
     if mode == "hybrid" and passages:
         scores = reranker().predict([(question, p.text) for p in passages])
@@ -42,6 +42,6 @@ def context_passages(passages: list[Passage]) -> list[Passage]:
     for p in passages[:3]:
         size = len(tokenizer.encode(p.model_dump_json(), add_special_tokens=False))
         if count + size <= 1200:
-            output.append(p)
+            output.append(p.model_copy(update={"id": f"P{len(output)+1}"}))
             count += size
     return output

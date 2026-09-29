@@ -39,13 +39,16 @@ def chunk_source(source: Source, tokenizer) -> list[dict]:
             body.append(line)
     sections.append((heading, "\n".join(body)))
     for heading, content in sections:
-        tokens = tokenizer.encode(content.strip(), add_special_tokens=False)
+        content = content.strip()
+        encoded = tokenizer(content, add_special_tokens=False, return_offsets_mapping=True)
+        tokens = encoded["input_ids"]
+        offsets = encoded["offset_mapping"]
         prefix = f"{source.title} / {heading}\n"
         budget = 300 - len(tokenizer.encode(prefix, add_special_tokens=False))
         if budget <= 50:
             raise ValueError("Heading exceeds chunk budget")
         for start in range(0, len(tokens), budget - 50):
-            value = prefix + tokenizer.decode(tokens[start:start + budget])
+            value = prefix + content[offsets[start][0]:offsets[min(start + budget, len(tokens)) - 1][1]]
             identity = f"{source.id}:{source.version}:{slug(heading)}:{start}"
             chunks.append(dict(id=identity, document_id=source.id, version=source.version,
                                heading=heading, section_id=slug(heading), text=value, content_hash=digest(value)))
@@ -53,17 +56,17 @@ def chunk_source(source: Source, tokenizer) -> list[dict]:
                 break
     return chunks
 
-def ingest(paths: list[Path]) -> dict:
+def ingest(paths: list[Path], rebuild_index: bool = False) -> dict:
     changed, unchanged = 0, 0
     for path in paths:
         source = read_source(path)
         content_hash = digest(source.version + source.title + source.markdown)
         with Session() as session:
             previous = session.get(Document, source.id)
-            if previous and previous.content_hash == content_hash:
+            if previous and previous.content_hash == content_hash and not rebuild_index:
                 unchanged += 1
                 continue
-            if previous and previous.version == source.version:
+            if previous and previous.version == source.version and previous.content_hash != content_hash:
                 raise ValueError(f"Bump version when editing {source.id}")
         # Expensive model work happens before the atomic replacement transaction.
         model = embedder()
@@ -72,11 +75,11 @@ def ingest(paths: list[Path]) -> dict:
         with Session.begin() as session:
             session.execute(text("SELECT pg_advisory_xact_lock(hashtext(:id))"), {"id": source.id})
             previous = session.get(Document, source.id)
-            if previous and previous.content_hash == content_hash:
+            if previous and previous.content_hash == content_hash and not rebuild_index:
                 unchanged += 1
                 continue
             if previous:
-                if previous.version == source.version:
+                if previous.version == source.version and previous.content_hash != content_hash:
                     raise ValueError(f"Concurrent update requires a new version for {source.id}")
                 session.execute(delete(Chunk).where(Chunk.document_id == source.id))
                 previous.version, previous.title = source.version, source.title
@@ -91,4 +94,5 @@ def ingest(paths: list[Path]) -> dict:
 
 def corpus_version(session) -> str:
     rows = session.execute(select(Document.id, Document.content_hash).order_by(Document.id)).all()
-    return digest("\n".join(f"{a}:{b}" for a, b in rows))
+    chunk_rows = session.execute(select(Chunk.id, Chunk.content_hash).order_by(Chunk.id)).all()
+    return digest("\n".join(f"{a}:{b}" for a, b in rows + chunk_rows))

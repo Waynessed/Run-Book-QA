@@ -1,0 +1,14 @@
+{
+  "status": "abstained",
+  "claims": [],
+  "reason": "The indexed runbooks do not provide sufficiently relevant evidence.",
+  "request_id": "1b263ea3-cb58-4c98-85d5-ebe3d66c021d",
+  "passages": [],
+  "retrieval_mode": "keyword",
+  "corpus_version": "b4c5d918be6ba63f27d41c66fe625352a9af5eb7ae96b10ff90f5f1f91bb84e3",
+  "model_version": "qwen2.5:1.5b@65ec06548149 (generation skipped)",
+  "latency_ms": 17.56,
+  "retrieval_confidence": null,
+  "repair_attempted": false,
+  "generation_details": null
+}

@@ -19,3 +19,5 @@ vectors = model.encode([c["text"] for c in prepared], normalize_embeddings=True)
 
 ## Scoring
 Evaluation implementation and real measurements are pending. No accuracy claim has been made.
+## Citation identity correction
+The stored chunk ID remains stable in `Passage.chunk_id`. `context_passages` assigns short local IDs such as P1 for generation and UI citations. `generate` includes a response schema whose citation enum contains those exact local IDs. The source mapping remains explicit through document ID, section ID, version and chunk ID.

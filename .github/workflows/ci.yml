@@ -1,0 +1,38 @@
+name: engineering checks
+on: [push, pull_request]
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:0.8.0-pg17
+        env:
+          POSTGRES_DB: runbookqa
+          POSTGRES_USER: runbookqa
+          POSTGRES_PASSWORD: local-demo-only
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U runbookqa"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      DATABASE_URL: postgresql+psycopg://runbookqa:local-demo-only@localhost/runbookqa
+      RUN_DB_TESTS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12.10'}
+      - run: pip install -r backend/requirements.lock
+      - run: alembic upgrade head && pytest -q
+        working-directory: backend
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.15.0'}
+      - run: npm ci && npm run build && npx playwright install --with-deps chromium
+        working-directory: frontend
+      - run: npm run dev > /tmp/vite.log 2>&1 &
+        working-directory: frontend
+      - run: npm run test:e2e
+        working-directory: frontend

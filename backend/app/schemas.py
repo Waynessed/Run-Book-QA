@@ -31,6 +31,7 @@ class GeneratedAnswer(BaseModel):
 
 class Passage(BaseModel):
     id: str
+    chunk_id: str = ""
     document_id: str
     title: str
     version: str
@@ -48,6 +49,7 @@ class AskResponse(GeneratedAnswer):
     latency_ms: float
     retrieval_confidence: float | None = None
     repair_attempted: bool = False
+    generation_details: dict | None = None
 
 def validate_citations(answer: GeneratedAnswer, passages: list[Passage]):
     allowed = {p.id for p in passages}

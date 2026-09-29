@@ -15,3 +15,37 @@ Flow: original Markdown -> tokenizer-aware heading chunks -> CPU embeddings prep
 Reasoning: retain fixed-stack storage from the first slice; use exact vector search for the small corpus; build replacement chunks before deleting old content; keep source text and document version inspectable. Keyword terms use OR after PostgreSQL stopword/stem normalization because AND across a full natural-language question suppresses useful matches. Semantic/hybrid code is present early but not claimed verified.
 
 Observed commands: Docker version and Git remote checks succeeded with elevation; no remote refs existed. Corpus authoring created ten synthetic runbooks and twenty development-only labels before tuning. Pending: dependency locks, real model response, database migration, ingestion, browser verification, tests, commit hash and push.
+## RQ-00 verification / 2026-09-29 UTC
+
+Local commit: 2f03dba (scaffold checkpoint). Qwen downloaded successfully; `docker compose exec -T ollama ollama run qwen2.5:1.5b 'Reply with the word READY only.'` returned READY from real CPU inference. Docker resources: 8 CPUs, 8,212,049,920 bytes RAM; model resident footprint reported 1.4 GB, CPU 100%. First load took 22.11 seconds according to Ollama logs. UI TypeScript/Vite production build passed. API dependency installation still in progress.
+
+Correction: npm audit found initial Vite/Playwright advisories. Updated to Vite 6.4.3 and Playwright 1.63.0, then lock-only install reported zero vulnerabilities. Verified reranker revision via Hugging Face API: 233902d25c440f23af6f7d6e94d2946bac0bee0a.
+
+Push was rejected by automatic approval review because the configured remote destination was not explicitly confirmed. Asked user to confirm Waynessed/Run-Book-QA; pushes pending that reply. Local implementation continues.
+## RQ-00 records correction / 2026-09-29 UTC
+
+User confirmed the exact GitHub destination. `git push -u origin codex/runbookqa` succeeded. First checkpoint is now on origin. Pinned database, Ollama, Python and Node image digests in Compose/Dockerfiles after inspecting pulled digests. Added config/runtime.json with observed hardware/runtime assumptions. Patched frontend production build passed with Vite 6.4.3. Added CI and Playwright engineering smoke tests; those tests have not run yet. API image export remains in progress (dependency installation succeeded).
+## RQ-01 correction and test / 2026-09-29 UTC
+
+API startup failed with `ModuleNotFoundError: app` inside Alembic. Added `prepend_sys_path = .` to backend/alembic.ini and a read-only backend bind mount for local iteration. Restarted the API; migration succeeded and UI readiness became available. `docker compose exec -T api python -m app.cli ingest` returned changed=10, unchanged=0 from real MiniLM embeddings. `docker compose exec -T -e RUN_DB_TESTS=1 api pytest -q`: 10 passed in 5.66s, two cache warnings from read-only source mount. Disabled the pytest cache provider to avoid those warnings. Tests include a real PostgreSQL update that removes obsolete chunks, unchanged embedding skip, and embedding failure preserving the active version.
+
+First browser UI is reachable and reports local model/corpus ready. Submitted the real supported question; awaiting generation and source inspection. Playwright deterministic smoke execution started.
+## RQ-01 real-model correction / 2026-09-29 UTC
+
+First browser question retrieved auth-401 / Authentication checks but Qwen abstained incorrectly, saying the evidence did not directly address the question. Observed end-to-end latency: 113.7s. This is an actual failed supported-answer attempt and does not meet first-demo acceptance. No substitute answer was used.
+
+Changed `generation.SYSTEM_PROMPT` to explicitly recognize symptom/procedure matches and request concrete short checks; serialized only evidence ID/text to reduce irrelevant metadata. Reduced maximum generated tokens from 500 to 300 and retained the model in memory between requests. Added `AskResponse.generation_details` to preserve actual Ollama responses and timing counters for later diagnosis/evaluation. A first scripted retry raced API restart and returned ResponseEnded; added health polling to the verification script before requests. Re-run in progress.
+## RQ-01 schema/citation correction / 2026-09-29 UTC
+
+The revised real-model verification still returned abstained on the supported 401 question; acceptance remains unmet. The verification script originally saved only successful answers, so that retry's raw trace was not retained. Corrected it to save every returned attempt before asserting acceptance.
+
+`retrieval.context_passages` now gives context passages short request-local IDs P1/P2/P3, preserving the permanent stored identity in `Passage.chunk_id`. `generation.generate` includes the actual JSON schema in the prompt and constrains citation strings with an enum of supplied IDs. Long chunk identifiers and an implicit response format were unnecessary burdens for the small generator. Deterministic membership validation remains; constraining IDs is still not semantic support validation. Real retry in progress.
+## RQ-01 accepted first demo / 2026-09-29 UTC
+
+`scripts/verify-first-demo.ps1` passed: real Qwen returned two claims for the 401 question, actual stored sections were retrievable with matching document versions, and the Wi-Fi question abstained. Supported run: 39,369.52 ms, zero repair attempts. Ollama trace: 1,012 prompt tokens; prompt evaluation 26.96s; 121 generated tokens; generation 10.92s; warm load 0.028s. Full output and timings: reports/first-demo-answer.json. Unsupported output: reports/first-demo-abstention.json.
+
+`REAL_MODEL=1 npm run test:e2e` passed all three browser tests in 38.1s. Supported answer + actual source endpoint took 32.7s; unsupported abstention took 1.8s; error test deliberately used a deterministic 503 fixture (1.1s). First working demo delivered to user at localhost:5174 before corpus expansion. This acceptance demonstrates the real question/evidence/model/source flow, not high semantic accuracy.
+
+Semantic review of that first answer: claim 1 cites Authentication checks correctly; claim 2 cites Verification and handover although the exact release-configuration comparison is in Authentication checks. This is a citation-support failure despite valid IDs. Prompt updated to allow multiple claims citing the same source and to cite the passage actually containing the fact. Requires further measured review.
+
+Further correction found during passage inspection: decoding uncased WordPiece tokens changed source casing and punctuation (AUTH_ISSUER and URL formatting). `chunk_source` now uses tokenizer offset mappings to slice original characters. Added explicit `--rebuild-index` for index-algorithm changes without altering unchanged source document versions. Routine ingestion still skips unchanged embeddings. `corpus_version` now includes chunk hashes as well as document hashes so an index rebuild changes the recorded corpus fingerprint. Real browser acceptance above used the earlier index; corrected index verification is next.

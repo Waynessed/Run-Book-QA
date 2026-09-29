@@ -1,4 +1,6 @@
 from functools import lru_cache
+import torch
+torch.set_num_threads(4)
 from sentence_transformers import SentenceTransformer, CrossEncoder
 from .settings import EMBED_MODEL, EMBED_REVISION, RERANK_MODEL, RERANK_REVISION
 

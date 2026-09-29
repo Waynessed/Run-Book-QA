@@ -1,6 +1,6 @@
 services:
   db:
-    image: pgvector/pgvector:0.8.0-pg17
+    image: pgvector/pgvector:0.8.0-pg17@sha256:40b404964359299eefdd5f8518facf1886c562848cf4de13b6eaf91cb70c2b87
     environment:
       POSTGRES_DB: runbookqa
       POSTGRES_USER: runbookqa
@@ -12,7 +12,7 @@ services:
       timeout: 5s
       retries: 30
   ollama:
-    image: ollama/ollama:0.6.8
+    image: ollama/ollama:0.6.8@sha256:50ab2378567a62b811a2967759dd91f254864c3495cbe50576bd8a85bc6edd56
     environment:
       OLLAMA_NUM_PARALLEL: "1"
     volumes: ["ollama-data:/root/.ollama"]
@@ -24,6 +24,7 @@ services:
       HF_HOME: /models
     ports: ["127.0.0.1:8081:8081"]
     volumes:
+      - ./backend:/app:ro
       - ./corpus:/corpus:ro
       - ./reports:/reports
       - ./config:/config:ro
