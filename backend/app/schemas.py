@@ -1,5 +1,19 @@
 from typing import Literal
-from pydantic import BaseModel, Field, ConfigDict, model_validator
+import re
+from pydantic import BaseModel, Field, ConfigDict, model_validator, field_validator
+from pydantic_core import PydanticCustomError
+
+INSTRUCTION_OVERRIDE = re.compile(
+    r"(?:^|[.!?:]\s+)\s*(?:ignore|disregard|override)\s+"
+    r"(?:the\s+)?(?:(?:all|previous|prior|system|developer)\s+)+(?:rules|instructions)\b",
+    re.IGNORECASE | re.MULTILINE,
+)
+
+def validate_reply_text(value: str) -> str:
+    # Narrow contract guard, not a semantic judge or general injection detector.
+    if INSTRUCTION_OVERRIDE.search(value):
+        raise PydanticCustomError("claim_instruction_override", "Reply text cannot issue instruction-override directives")
+    return value
 
 class AskRequest(BaseModel):
     question: str = Field(min_length=1, max_length=1000)
@@ -14,14 +28,24 @@ class AskRequest(BaseModel):
 
 class Claim(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    text: str = Field(min_length=1, max_length=600)
+    text: str = Field(min_length=1, max_length=350)
     citation_ids: list[str] = Field(min_length=1, max_length=3)
+
+    @field_validator("text")
+    @classmethod
+    def no_instruction_override(cls, value):
+        return validate_reply_text(value)
 
 class GeneratedAnswer(BaseModel):
     model_config = ConfigDict(extra="forbid")
     status: Literal["answered", "abstained"]
     claims: list[Claim] = Field(max_length=3)
     reason: str = Field(max_length=600)
+
+    @field_validator("reason")
+    @classmethod
+    def no_instruction_override(cls, value):
+        return validate_reply_text(value)
 
     @model_validator(mode="after")
     def consistent(self):

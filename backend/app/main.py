@@ -28,7 +28,16 @@ def ready():
 @app.post("/v1/ask", response_model=AskResponse)
 def ask_endpoint(request: AskRequest):
     try:
-        return ask(request)
+        result = ask(request)
+        if result.generation_details:
+            fields = {"model", "created_at", "done", "done_reason", "total_duration", "load_duration",
+                      "prompt_eval_count", "prompt_eval_duration", "eval_count", "eval_duration",
+                      "request_attempt", "request_error", "validation_error_kind"}
+            result = result.model_copy(update={"generation_details": {"attempts": [
+                {k: v for k, v in attempt.items() if k in fields}
+                for attempt in result.generation_details.get("attempts", [])
+            ]}})
+        return result
     except ModelError as exc:
         raise HTTPException(503, str(exc)) from exc
 

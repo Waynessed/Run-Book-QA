@@ -88,3 +88,9 @@ The prepared final-demo.ps1 reads the document-injection question only from a co
 ## First complete review
 
 The 5579119 development comparison completed all three modes. All 120 outputs were inspected against labelled facts and exactly attached sources. apply-annotations.py verified report identity and claim counts, then wrote a separate reviewed report and updated latest.json. The raw report remains unchanged. Annotation application is now executed, not merely implemented. The observed hybrid instruction failures motivate a development-only correction and a fresh comparison before freezing.
+
+## Directive validator and public answer traces
+
+validate_reply_text rejects a narrow set of explicit instruction-override imperative forms at sentence/line starts. Claim text and abstention reason field validators call it. Rejection is a typed Pydantic error, so generate classifies the raw attempt as claim_policy and permits the same one repair as other invalid outputs. The rejected raw response remains in traces; no safe answer is fabricated on repeated failure.
+
+service.ask retains full generation traces for evaluation.evaluate. The POST endpoint returns a copied AskResponse with only timing/error-kind fields in generation_details; invalid-output ModelError text also omits untrusted raw input. Sources remain inspectable evidence, and raw evaluation records remain available for review. This limits live-answer trace exposure without claiming source text or historical evaluation data is sanitized. Policy-rejection attempts and malformed-output attempts have separate denominators; HTTP failures have recorded request-attempt placeholders.

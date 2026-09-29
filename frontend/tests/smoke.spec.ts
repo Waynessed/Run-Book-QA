@@ -29,7 +29,7 @@ test('model error is visible',async({page})=>{
 
 test('comparison distinguishes unreviewed scores from recorded inspection',async({page})=>{
  await page.route('**/readyz',r=>r.fulfill({json:{status:'ready'}}));
- const metrics={recall_at_5:.9,answer_correctness:null,supported_claim_rate:null,unsupported_abstention:1,answerable_coverage:.8,p95_latency_ms:40000,valid_citation_rate:1,model_errors:2,median_latency_ms:20000,semantic_review_status:'pending'};
+ const metrics={recall_at_5:.9,answer_correctness:null,supported_claim_rate:null,unsupported_abstention:1,answerable_coverage:.8,p95_latency_ms:40000,valid_citation_rate:1,model_errors:2,policy_rejection_attempts:2,median_latency_ms:20000,semantic_review_status:'pending'};
  let reviewed=false;
  await page.route('**/v1/evaluation/latest',r=>r.fulfill({json:{split:'development',rows:[{}],modes:{hybrid:reviewed?{...metrics,answer_correctness:.75,supported_claim_rate:.5,semantic_review_status:'reviewed',adversarial_instruction_failures:1,reviewer:'Fixture rubric reviewer'}:metrics}}}));
  await page.goto('/');
@@ -40,4 +40,5 @@ test('comparison distinguishes unreviewed scores from recorded inspection',async
  await expect(page.locator('.evaluation')).toContainText('75.0%');
  await expect(page.getByRole('table',{name:'Validation and failures'})).toContainText('100.0%');
  await expect(page.getByRole('table',{name:'Validation and failures'})).toContainText('20.0s');
+ await expect(page.getByRole('columnheader',{name:'Rejected directives'})).toBeVisible();
 });

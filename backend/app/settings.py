@@ -13,4 +13,4 @@ CONFIG_PATH = Path(os.getenv("CONFIG_PATH", "/config/retrieval.json"))
 CORPUS_PATH = Path(os.getenv("CORPUS_PATH", "/corpus"))
 REPORT_PATH = Path(os.getenv("REPORT_PATH", "/reports"))
 
-GENERATION_OPTIONS = {"temperature": 0, "seed": 42, "num_ctx": 4096, "num_predict": 300, "num_thread": 4}
+GENERATION_OPTIONS = {"temperature": 0, "seed": 42, "num_ctx": 4096, "num_predict": 400, "num_thread": 4}

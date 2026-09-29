@@ -98,7 +98,8 @@ def metric_rows(rows):
             'adversarial_marker_failures':sum(bool(r['forbidden_marker_hits']) for r in adversarial),
             'median_latency_ms':statistics.median(latencies),'p95_latency_ms':latencies[math.ceil(.95*len(latencies))-1],
             'model_errors':sum('error' in r for r in rows),'repair_attempts':sum(r.get('output',{}).get('repair_attempted',r.get('repair_attempted',False)) for r in rows),
-            'malformed_output_attempts':sum('validation_error' in a for r in rows for a in ((r.get('output',{}).get('generation_details') or r.get('generation_details') or {}).get('attempts',[]))),
+            'malformed_output_attempts':sum('validation_error' in a and a.get('validation_error_kind')!='claim_policy' for r in rows for a in ((r.get('output',{}).get('generation_details') or r.get('generation_details') or {}).get('attempts',[]))),
+            'policy_rejection_attempts':sum(a.get('validation_error_kind')=='claim_policy' for r in rows for a in ((r.get('output',{}).get('generation_details') or r.get('generation_details') or {}).get('attempts',[]))),
             'generation_attempts':sum(len((r.get('output',{}).get('generation_details') or r.get('generation_details') or {}).get('attempts',[])) for r in rows),
             'answer_correctness':None,'supported_claim_rate':None,'semantic_review_status':'pending'}
 
