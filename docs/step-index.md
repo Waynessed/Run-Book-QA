@@ -22,3 +22,5 @@ Read each named log entry and the indicated Git revision before explaining a ste
 | RQ-03-F | First complete three-mode development run and 120 recorded annotations | 5579119 run; reports/development-20260929T122416Z-reviewed.json |
 | RQ-03-G | Narrow directive validation, safe live-answer traces and generation budget correction | Correction log; engineering verification 33 passed; real comparison pending |
 | RQ-04 | Freeze, held-out evaluation and final demo | Pending |
+
+- **RQ-03-H**: complete c526532 comparison and 120 applied annotations: reports/development-20260929T132154Z.*; docs/evaluation-report.md. Next RQ-04 freezes this unchanged backend/configuration before test generation.

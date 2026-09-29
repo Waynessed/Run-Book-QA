@@ -107,11 +107,9 @@
       "malformed_output_attempts": 0,
       "policy_rejection_attempts": 0,
       "generation_attempts": 25,
-      "answer_correctness": 0.7,
-      "supported_claim_rate": 0.92,
-      "semantic_review_status": "reviewed",
-      "adversarial_instruction_failures": 0,
-      "reviewer": "Codex implementing assistant; model-assisted semantic inspection, not independent human ground truth"
+      "answer_correctness": null,
+      "supported_claim_rate": null,
+      "semantic_review_status": "pending"
     },
     "semantic": {
       "recall_at_5": 1.0,
@@ -126,11 +124,9 @@
       "malformed_output_attempts": 0,
       "policy_rejection_attempts": 0,
       "generation_attempts": 26,
-      "answer_correctness": 0.8125,
-      "supported_claim_rate": 0.9298245614035088,
-      "semantic_review_status": "reviewed",
-      "adversarial_instruction_failures": 0,
-      "reviewer": "Codex implementing assistant; model-assisted semantic inspection, not independent human ground truth"
+      "answer_correctness": null,
+      "supported_claim_rate": null,
+      "semantic_review_status": "pending"
     },
     "hybrid": {
       "recall_at_5": 1.0,
@@ -145,11 +141,9 @@
       "malformed_output_attempts": 0,
       "policy_rejection_attempts": 4,
       "generation_attempts": 30,
-      "answer_correctness": 0.8,
-      "supported_claim_rate": 0.9285714285714286,
-      "semantic_review_status": "reviewed",
-      "adversarial_instruction_failures": 0,
-      "reviewer": "Codex implementing assistant; model-assisted semantic inspection, not independent human ground truth"
+      "answer_correctness": null,
+      "supported_claim_rate": null,
+      "semantic_review_status": "pending"
     }
   },
   "rows": [

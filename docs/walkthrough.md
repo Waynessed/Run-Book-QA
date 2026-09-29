@@ -18,7 +18,7 @@ vectors = model.encode([c["text"] for c in prepared], normalize_embeddings=True)
 `frontend/src/main.tsx:App` submits the selected mode, displays answers/abstentions/errors, and opens current documents through `/v1/documents/{id}`. The quoted retrieved section remains available if a source has since changed. Evaluation measurements appear only when a saved report exists.
 
 ## Scoring
-Evaluation and annotation application are implemented. Development retrieval calibration and real generation smoke checks were executed; complete three-mode generation comparison and final semantic scoring remain pending. No final generation-accuracy claim has been made.
+Evaluation and annotation application are implemented. Development retrieval calibration and real generation smoke checks were executed; the first complete three-mode development comparison is reviewed; the current corrected configuration is being compared again, and final held-out scoring remains pending. No final generation-accuracy claim has been made.
 ## Citation identity correction
 The stored chunk ID remains stable in `Passage.chunk_id`. `context_passages` assigns short local IDs such as P1 for generation and UI citations. `generate` includes a response schema whose citation enum contains those exact local IDs. The source mapping remains explicit through document ID, section ID, version and chunk ID.
 ## Evaluation flow
@@ -69,17 +69,17 @@ value = prefix + content[offsets[start][0]:offsets[min(start + budget, len(token
 ## Conditional generation contract
 `generation.response_schema` creates a oneOf schema for two mutually exclusive states. An answered result has one to three cited claims and empty reason; an abstained result has zero claims. `GeneratedAnswer.consistent` validates the same relationship independently. This prevents an extra uncited answered narrative field and rejects mixed statuses; semantic entailment still requires review. Failed raw model responses are retained by `ModelError.traces` for evaluation.
 
-## Pause and the next execution / 2026-09-29
+## Historical pause state at 5579119 / 2026-09-29
 
-At code checkpoint e31a76f, both conditional-schema branches were verified with real Qwen. The earlier 31-output diagnostic archive records the defects that motivated the correction; inspect it together with the historical ca7857d implementation when explaining those failures. The corrected full development run was then intentionally stopped at the user's request before any case was saved. No evaluator remains active; demo services remain running.
+At code checkpoint e31a76f, both conditional-schema branches were verified with real Qwen. The earlier 31-output diagnostic archive records the defects that motivated the correction; inspect it together with the historical ca7857d implementation when explaining those failures. The corrected full development run was then intentionally stopped at the user's request before any case was saved. At that pause no evaluator remained active; demo services remained running.
 
-`evaluation.evaluate` saves partial progress after each completed case, but has no resume-from-partial option. On resumption, run a fresh development comparison and preserve its raw report before semantic review. Annotation templates bind to the exact report filename and SHA-256; `scripts/apply-annotations.py` checks that identity and writes a separate reviewed report. Applying annotations to a completed run has not yet been exercised.
+`evaluation.evaluate` saves partial progress after each completed case, but has no resume-from-partial option. On resumption, run a fresh development comparison and preserve its raw report before semantic review. Annotation templates bind to the exact report filename and SHA-256; `scripts/apply-annotations.py` checks that identity and writes a separate reviewed report. At that pause annotation application had not yet been exercised; the completed review below records its subsequent execution.
 
 The threshold's 24/24 answerable acceptance and 8/8 unsupported rejection describe retrieval gating only. Full answer correctness, supporting-claim rate, adversarial outcomes and latency comparison still require the complete run. Configuration freeze, held-out generation and the final demo package are subsequent work. See current-state.md for launch commands and step-index.md for historical revision references.
 
 ## Resumed comparison
 
-The user resumed work from 5579119. A fresh serial development comparison is running with the corrected e31a76f backend. `scripts/inspect-evaluation.py` formats existing report rows and exactly attached evidence for semantic inspection; it does not judge outputs or modify raw files. Final annotations bind to the completed raw report, even when provisional inspection began from pending progress.
+The user resumed work from 5579119. The first resumed serial development comparison ran with the corrected e31a76f backend (report revision 5579119); it subsequently completed as recorded below. `scripts/inspect-evaluation.py` formats existing report rows and exactly attached evidence for semantic inspection; it does not judge outputs or modify raw files. Final annotations bind to the completed raw report, even when provisional inspection began from pending progress.
 
 The comparison UI separates factual/support review from deterministic citation membership and reports recorded reviewer provenance. It also displays adversarial instruction failures, errors and median/p95 latency; no semantic field is substituted with an automatic ID check.
 
@@ -94,3 +94,7 @@ The 5579119 development comparison completed all three modes. All 120 outputs we
 validate_reply_text rejects a narrow set of explicit instruction-override imperative forms at sentence/line starts. Claim text and abstention reason field validators call it. Rejection is a typed Pydantic error, so generate classifies the raw attempt as claim_policy and permits the same one repair as other invalid outputs. The rejected raw response remains in traces; no safe answer is fabricated on repeated failure.
 
 service.ask retains full generation traces for evaluation.evaluate. The POST endpoint returns a copied AskResponse with only timing/error-kind fields in generation_details; invalid-output ModelError text also omits untrusted raw input. Sources remain inspectable evidence, and raw evaluation records remain available for review. This limits live-answer trace exposure without claiming source text or historical evaluation data is sanitized. Policy-rejection attempts and malformed-output attempts have separate denominators; HTTP failures have recorded request-attempt placeholders.
+
+## Corrected review checkpoint
+
+The c526532 comparison completed all 120 outputs and apply-annotations.py successfully bound/applied the recorded review. Current configuration is final for held-out measurement. Two hybrid adversarial requests show generate -> typed claim_policy rejection -> one repair -> rejection -> explicit ModelError, with both raw attempts preserved and no answer substituted. The public API emits the generic error; evaluator traces retain the diagnostic data. The reviewed report scores those requests zero for missing legitimate answers and separately records four rejected directives.

@@ -157,3 +157,19 @@ Real correction smoke completed: dev-a-01 hybrid answered with correctly support
 Frontend build passed and updated four deterministic browser tests passed in 11.3s, including rejected-directive visibility. Whole cached-stack bootstrap is being exercised before the fresh comparison; no active evaluator is running during service restart/build.
 
 Whole scripts/bootstrap.ps1 passed on the existing cached stack: Qwen manifest/digest verified, API/web builds succeeded, embedding/reranking models loaded, ingestion changed=0/unchanged=30, readiness 61 chunks with exact pinned digest. This verifies the complete cached launch path; original model downloads were separately verified earlier, but a fresh empty-machine whole-script run was not repeated.
+
+## RQ-03-H fresh corrected comparison / 2026-09-29 UTC
+
+Committed/pushed c526532 after 33 engineering tests, four UI fixtures, three real targeted checks and cached bootstrap succeeded. Started a fresh full development comparison at that revision. App source/corpus/configuration stay fixed through completion. The earlier full report remains an immutable pre-correction comparison, with annotations and failures preserved.
+
+GitHub Actions at c526532 completed successfully (run 36574536932). Keyword and semantic corrected comparisons finished with zero errors/repairs/invalid-output attempts, no delivered adversarial failures in rubric inspection, and unsupported abstention 8/8 each. Keyword reviewed fact score 0.70 and support 0.92; semantic 0.8125 and 0.92982456. These are interim completed-mode measurements; hybrid and final report binding remain pending. Historical pause prose in walkthrough is now explicitly dated to avoid confusing it with current state.
+
+Corrected hybrid dev-x-04 still generated the imported instruction/marker/secret directive twice. Both raw responses were rejected by claim_policy validation, and the outward result was an explicit ModelError. This is executed evidence of the narrow guard blocking delivery, not evidence of an immune generator. The request receives correctness zero because its legitimate rollback question is unanswered. Raw attempt traces remain in the evaluation; no synthetic fallback or configuration change was made.
+
+## RQ-03-H complete reviewed correction / 2026-09-29 UTC
+
+The c526532 run completed all 120 outputs, with unchanged manifest/corpus verified. Applied all 120 annotations successfully; helper verified report SHA, unique identities and actual claim counts. Hybrid fact score 0.80, support 0.92857143, Recall@5 1.0, coverage 24/24, unsupported abstention 8/8, zero delivered instruction failures, two explicit errors, four claim-policy rejections, zero malformed-output attempts; median 29.777s/p95 50.233s. Keyword/semantic fact scores 0.70/0.8125 and support 0.92/0.92982456. Raw responses, notes, annotations, reviewed reports and comparison are preserved separately.
+
+The prompt/budget/validator combination improves development fact scores and removes observed JSON truncation; semantic/hybrid support slightly regresses. Two hybrid requests still generate the malicious directive on both attempts, blocked with visible errors. No held-out tuning or generation yet. Configuration is now final for the held-out measurement; remaining work is freeze/test/review and final demo/package. Expanded README and corrected historical/current documentation status.
+
+The observed blocked hybrid requests exposed a final-demo recording gap: Invoke-RestMethod could terminate before saving its response bundle. Ask-DemoQuestion now records HTTP/transport errors as explicit error objects, so final-demo.json preserves a failing demonstration. Marker absence is not counted as success when the request errors. PowerShell parser passed; live final-demo execution remains pending. This script adjustment does not change the frozen model/retrieval configuration.

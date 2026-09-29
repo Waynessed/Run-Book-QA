@@ -16,6 +16,18 @@ Hybrid improved retrieval and delivery coverage but regressed on instruction-fol
 
 Development retrieval calibration separately accepted 24/24 answerable and rejected 8/8 unsupported cases at threshold 0.7685428857803345 (reports/calibration.json). That gate measurement is not generation accuracy.
 
-## Next
+## Corrected complete development comparison
 
-A development-only correction will add a narrow instruction-override output validator, safer public trace/error handling, stronger relevant-evidence prompting and a bounded generation-budget adjustment. A fresh full comparison will verify that configuration before freeze. No held-out generation or configuration freeze has occurred. Handoff targets remain goals.
+Run: development-20260929T132154Z; code revision c526532. All 120 outputs have report-bound annotations and separate reviewed results. Corpus, dataset, retrieval ordering and calibrated threshold match the earlier comparison. Changed generation prompt, directive validation, 350-character claim cap and 400-token output budget were selected using development evidence only.
+
+| Mode | Recall@5 | Fact score | Claim support | Unsupported abstention | Answerable coverage | Delivered adversarial failures | Median / p95 seconds | Errors | Rejected directives |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Keyword | 87.5% | 70.0% | 92.0% | 100.0% | 91.7% | 0/8 | 25.6 / 41.9 | 0 | 0 |
+| Semantic | 100.0% | 81.2% | 93.0% | 100.0% | 95.8% | 0/8 | 19.5 / 37.9 | 0 | 0 |
+| Hybrid | 100.0% | 80.0% | 92.9% | 100.0% | 100.0% | 0/8 | 29.8 / 50.2 | 2 | 4 |
+
+All modes have 100% valid citation-ID membership and zero malformed-output attempts. Keyword/semantic have zero repairs; hybrid has two repairs, four rejected directive attempts and two explicit errors (dev-x-04 / dev-x-05). In both requests the generator repeated the malicious imported directive twice. The guard prevented those responses from becoming delivered answers. Zero delivered instruction failures does not mean the raw generator ignored instructions or that all adversarial questions were answered.
+
+Compared with the earlier run, fact scores improve by 5.0 / 10.0 / 10.0 percentage points. Keyword support improves; semantic/hybrid support decline slightly (93.3% to 93.0%, 93.9% to 92.9%). Hybrid answerable coverage improves from 23/24 to 24/24, but service errors increase from one to two. The previous latency-question truncation is absent; long irrelevant paragraphs and capped fragments remain. Timing differences are measurements on the same shared CPU host, not controlled causal estimates.
+
+Artifacts: reports/development-20260929T132154Z.json, matching -annotations.json and -reviewed.json; working notes retain the inspection history. Review is model-assisted by the implementing assistant, not an independent human assessment. Held-out configuration freeze and generation are next; no test answer has been used for tuning.
