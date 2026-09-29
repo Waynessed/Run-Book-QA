@@ -12,13 +12,13 @@ vectors = model.encode([c["text"] for c in prepared], normalize_embeddings=True)
 `backend/app/retrieval.py:retrieve` executes PostgreSQL full-text ranking or exact cosine distance. Hybrid merges twenty results from each using `reciprocal_rank_fusion`, then reranks twenty merged candidates. `context_passages` selects at most three passages within a 1,200-token serialized evidence budget. `service.ask` reads evidence and corpus hash from one repeatable-read snapshot.
 
 ## Generation and validation
-`generation.generate` sends the question and JSON evidence to the pinned local model at temperature zero. It asks for `GeneratedAnswer.model_json_schema()`. Pydantic enforces status/claim consistency, three claims maximum and required citations. `schemas.validate_citations` rejects citation IDs absent from the supplied passages. One repair is allowed; HTTP errors and timeouts return visible errors. These checks establish structure, not whether a claim is factually entailed.
+`generation.generate` sends the question and JSON evidence to the pinned local model at temperature zero. It supplies `generation.response_schema(passages)`, which specializes the Pydantic schema with conditional status/claim branches and the exact citation enum. Pydantic enforces status/claim consistency, three claims maximum and required citations. `schemas.validate_citations` rejects citation IDs absent from the supplied passages. One repair is allowed; HTTP errors and timeouts return visible errors. These checks establish structure, not whether a claim is factually entailed.
 
 ## User interface
 `frontend/src/main.tsx:App` submits the selected mode, displays answers/abstentions/errors, and opens current documents through `/v1/documents/{id}`. The quoted retrieved section remains available if a source has since changed. Evaluation measurements appear only when a saved report exists.
 
 ## Scoring
-Evaluation implementation and real measurements are pending. No accuracy claim has been made.
+Evaluation and annotation application are implemented. Development retrieval calibration and real generation smoke checks were executed; complete three-mode generation comparison and final semantic scoring remain pending. No final generation-accuracy claim has been made.
 ## Citation identity correction
 The stored chunk ID remains stable in `Passage.chunk_id`. `context_passages` assigns short local IDs such as P1 for generation and UI citations. `generate` includes a response schema whose citation enum contains those exact local IDs. The source mapping remains explicit through document ID, section ID, version and chunk ID.
 ## Evaluation flow
@@ -68,3 +68,11 @@ value = prefix + content[offsets[start][0]:offsets[min(start + budget, len(token
 | Semantic rubric review | Recorded interpretation of correctness/support | Independent human truth or generalization beyond the synthetic dataset |
 ## Conditional generation contract
 `generation.response_schema` creates a oneOf schema for two mutually exclusive states. An answered result has one to three cited claims and empty reason; an abstained result has zero claims. `GeneratedAnswer.consistent` validates the same relationship independently. This prevents an extra uncited answered narrative field and rejects mixed statuses; semantic entailment still requires review. Failed raw model responses are retained by `ModelError.traces` for evaluation.
+
+## Pause and the next execution / 2026-09-29
+
+At code checkpoint e31a76f, both conditional-schema branches were verified with real Qwen. The earlier 31-output diagnostic archive records the defects that motivated the correction; inspect it together with the historical ca7857d implementation when explaining those failures. The corrected full development run was then intentionally stopped at the user's request before any case was saved. No evaluator remains active; demo services remain running.
+
+`evaluation.evaluate` saves partial progress after each completed case, but has no resume-from-partial option. On resumption, run a fresh development comparison and preserve its raw report before semantic review. Annotation templates bind to the exact report filename and SHA-256; `scripts/apply-annotations.py` checks that identity and writes a separate reviewed report. Applying annotations to a completed run has not yet been exercised.
+
+The threshold's 24/24 answerable acceptance and 8/8 unsupported rejection describe retrieval gating only. Full answer correctness, supporting-claim rate, adversarial outcomes and latency comparison still require the complete run. Configuration freeze, held-out generation and the final demo package are subsequent work. See current-state.md for launch commands and step-index.md for historical revision references.

@@ -16,5 +16,7 @@ Read each named log entry and the indicated Git revision before explaining a ste
 | RQ-02-C | Evaluation/raw reports/rubric and freeze interfaces implemented | 59c53c1 |
 | RQ-03-A | Three retrieval modes and shared confidence gate integrated | 1003bae |
 | RQ-03-B | Development threshold selected and index/config snapshot guards added | ca7857d; reports/calibration.json |
-| RQ-03-C | Full development comparison | Running; no final measurements yet |
+| RQ-03-C | Partial development diagnostic, 31 outputs and recorded semantic failures | ca7857d; reports/development-diagnostic-20260929.json |
+| RQ-03-D | Conditional generation schema and failed raw traces verified | e31a76f; conditional-schema smoke reports |
+| RQ-03-E | User-requested pause; corrected comparison stopped before saving a case | Pause log/current-state; full comparison remains pending |
 | RQ-04 | Freeze, held-out evaluation and final demo | Pending |

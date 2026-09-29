@@ -1,6 +1,6 @@
-# Early development findings (run still active)
+# Early development findings (archived diagnostic)
 
-These are inspected examples, not final aggregate results. The running report is development-20260929T062619Z.pending.json at backend source revision ca7857d. The complete raw report will be saved only after all 120 outputs finish.
+These are inspected examples, not final aggregate results. The ca7857d run was interrupted after 31 saved outputs for response-contract corrections; its tracked archive is reports/development-diagnostic-20260929.json. At e31a76f the corrected development run was stopped at the user's request before any case was saved. No evaluation remains active and no completed three-mode report exists yet.
 
 | Case / keyword | Observed issue | Why it matters |
 |---|---|---|
