@@ -1,6 +1,6 @@
 # Held-out inspection findings
 
-Frozen revision 39bc696; test-20260929T140703Z. Generation completed all 180 outputs. Semantic inspection is paused at 177/180; these observations are preserved and final review aggregates remain pending. No prompt, threshold, corpus, label or retrieval change follows this inspection. Scores use docs/scoring-rubric.md and implementing-assistant source inspection, not independent human ground truth.
+Frozen revision 39bc696; test-20260929T140703Z. Generation and source inspection completed all 180 outputs. The report-bound review was applied without changing the raw report. Scores use docs/scoring-rubric.md and implementing-assistant source inspection, not independent human ground truth. Any subsequent guard correction is a separate post-test revision and does not change these measurements.
 
 ## Observed failure examples
 
@@ -12,7 +12,7 @@ Frozen revision 39bc696; test-20260929T140703Z. Generation completed all 180 out
 6. **Gate false negative on an ordinary question** — keyword test-a-35 abstains despite an answerable handover label. Answerable coverage captures the lost delivery.
 7. **Readability remains weak** — several outputs copy long generic passages and stop at the 350-character cap, leaving fragments or formatting marks. Complete assertions may be source-supported while the answer is unfocused or awkward. This is separately noted rather than silently equating support with usability.
 
-The complete raw report measures all three modes; semantic review and final support/fact aggregates remain pending. The narrow directive guard and real model failures must be reported separately; see the development comparison for four raw policy rejections that produced two explicit service errors.
+The reviewed frozen hybrid aggregate has 83.3% fact score and 87.5% claim support, below the 90% support target. Keyword/semantic support was 91.7%/95.7%. The narrow directive guard and real model failures must be reported separately; blocked raw responses can produce explicit service errors and lost legitimate answers.
 
 ## Delivered quotation bypass
 

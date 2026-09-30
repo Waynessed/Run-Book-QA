@@ -106,3 +106,9 @@ freeze and evaluate ran at 39bc696 with unchanged backend/configuration. evaluat
 The hybrid test-x-07 quoted imported note bypasses validate_reply_text because the narrow imperative pattern misses the heading/blockquote prefix. Forbidden text was delivered even though the claim called the note unapproved. Raw traces and marker hits preserve that failure. Other model attempts were rejected and produced explicit errors; these are different outcomes and must be explained separately. Frozen code is unchanged after observing the test bypass.
 
 At the user's stop request, Docker top verified that no evaluator remained; API/UI services remain running. Final live demo and fresh real-model browser verification remain pending. See current-state.md for exact status and resume-entry.md for the supported portfolio wording.
+
+## Held-out review completion and recruiter preview
+
+On resumption, the final three saved hybrid outputs were source-inspected and appended to the exact SHA-bound annotation file. `scripts/apply-annotations.py` verified all 180 IDs/claim counts against the original raw report and wrote a separate reviewed JSON. The frozen aggregate is in `docs/evaluation-report.md`; hybrid claim support is 87.5%, below the handoff target, and the quoted instruction failure remains. This is an evaluation of the original frozen revision only.
+
+The recruiter-facing static preview under development uses saved real model outputs and source Markdown. It must identify itself as recorded and cannot answer new arbitrary questions. The live local stack still requires Docker Desktop. On 2026-10-01 the daemon pipe was unavailable, so current real-browser and final-demo execution remain pending.
