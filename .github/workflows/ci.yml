@@ -36,3 +36,12 @@ jobs:
         working-directory: frontend
       - run: npm run test:e2e
         working-directory: frontend
+      - run: npm run build:recorded
+        working-directory: frontend
+      - run: npm exec -- vite preview --mode recorded --host 127.0.0.1 --port 5175 > /tmp/runbookqa-preview.log 2>&1 &
+        working-directory: frontend
+      - run: npm run test:e2e -- --grep 'recorded preview'
+        working-directory: frontend
+        env:
+          RECORDED_DEMO: '1'
+          PLAYWRIGHT_BASE_URL: http://127.0.0.1:5175

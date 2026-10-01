@@ -30,3 +30,6 @@ Read each named log entry and the indicated Git revision before explaining a ste
 - **RQ-04 pause** (2026-09-29 15:12 UTC): complete 180 raw outputs at 39bc696; 177 annotations recorded, three null; no evaluator active. docs/current-state.md lists remaining rows and unexecuted final-demo/browser steps. docs/resume-entry.md records evidence-backed resume wording.
 
 - **RQ-04-B** (2026-10-01): completed all 180 report-bound annotations and applied the reviewed held-out report. Hybrid support 87.5% missed target; one delivered quoted instruction remains. `reports/test-20260929T140703Z-reviewed.json`, `docs/evaluation-report.md`. Docker Desktop unavailable for current live demo verification.
+
+- **RQ-05-A** (2026-10-01): generated a finite recorded preview from 12 saved development responses and original source Markdown, added explicit recorded-mode UI, browser verification and GitHub Pages workflow. `scripts/build-recorded-preview.py`, `frontend/src/recorded-demo.json`, `docs/assets/recorded-preview.png`.
+- **RQ-05-B** (2026-10-01): broadened quoted-directive validation after held-out exposure, with generic engineering regression. Separate from frozen 39bc696 results; backend suite awaits available Docker or CI.

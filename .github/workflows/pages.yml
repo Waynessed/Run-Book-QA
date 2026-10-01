@@ -1,0 +1,55 @@
+name: recorded recruiter preview
+on:
+  push:
+    branches: [codex/runbookqa]
+    paths:
+      - '.github/workflows/pages.yml'
+      - 'frontend/**'
+      - 'corpus/**'
+      - 'reports/development-20260929T132154Z-reviewed.json'
+      - 'reports/development-20260929T132154Z-annotations.json'
+      - 'reports/test-20260929T140703Z-reviewed.json'
+      - 'scripts/build-recorded-preview.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.15.0'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12.10'}
+      - run: python scripts/build-recorded-preview.py
+      - run: git diff --exit-code -- frontend/src/recorded-demo.json
+      - run: npm ci && npm run build:recorded && npx playwright install --with-deps chromium
+        working-directory: frontend
+      - run: npm exec -- vite preview --mode recorded --host 127.0.0.1 --port 5175 > /tmp/runbookqa-preview.log 2>&1 &
+        working-directory: frontend
+      - run: npm run test:e2e -- --grep 'recorded preview'
+        working-directory: frontend
+        env:
+          RECORDED_DEMO: '1'
+          PLAYWRIGHT_BASE_URL: http://127.0.0.1:5175
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: frontend/dist
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy recorded preview
+        id: deployment
+        uses: actions/deploy-pages@v4

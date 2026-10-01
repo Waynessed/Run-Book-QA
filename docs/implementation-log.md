@@ -197,3 +197,11 @@ Completed the remaining hybrid test-a-33, test-a-34 and test-x-11 source inspect
 
 Current `docker compose ps` failed because Docker Desktop's daemon pipe does not exist, so final live browser and `scripts/final-demo.ps1` remain unexecuted. Static recorded preview and a separately documented post-test guard correction are next.
 
+## RQ-05 recruiter preview and post-test correction / 2026-10-01 Sydney
+
+Built `scripts/build-recorded-preview.py` from the existing corrected development run: four question IDs x three retrieval modes = 12 real saved responses, their exact annotation notes, and nine version-checked original source documents. The finite JSON includes only aggregate measurements from the frozen held-out review; no held-out response row is exposed or used to tune the preview. `frontend/src/main.tsx` now has a recorded build mode with no API calls, a prominent static/recorded label, finite question selection, citation/source inspection and explicit review notes. Normal live mode remains API-backed. Vite recorded mode builds for `/Run-Book-QA/`. Added README screenshots and GitHub Pages Actions build/test/deploy workflow; Pages was observed disabled in repository Settings before deployment configuration.
+
+Executed `npm run build` and `npm run build:recorded` successfully. Four existing fixture browser tests passed; the new recorded preview browser test passed with saved answer, source, held-out metric and unsupported abstention visible. Screenshots were visually inspected. Python standard-library checks confirmed the broader explicit-directive matcher rejects generic quoted/embedded forms while preserving a negated warning and ordinary checks. Full backend pytest could not run on this host because Pydantic/pytest are not installed outside Docker; CI and a recovered Docker daemon must verify it. This change follows exposure to the frozen test failure and does not improve that historical score.
+
+Launched the installed Docker Desktop application in the background, but its Linux engine pipe was still absent at the subsequent elevated `docker compose ps` check. Final real-model browser screenshot and `scripts/final-demo.ps1` therefore remain unexecuted on this revision. No new model output or independent held-out measurement is claimed.
+

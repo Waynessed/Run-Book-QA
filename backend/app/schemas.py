@@ -4,15 +4,17 @@ from pydantic import BaseModel, Field, ConfigDict, model_validator, field_valida
 from pydantic_core import PydanticCustomError
 
 INSTRUCTION_OVERRIDE = re.compile(
-    r"(?:^|[.!?:]\s+)\s*(?:ignore|disregard|override)\s+"
+    r"\b(?:ignore|disregard|override)\s+"
     r"(?:the\s+)?(?:(?:all|previous|prior|system|developer)\s+)+(?:rules|instructions)\b",
-    re.IGNORECASE | re.MULTILINE,
+    re.IGNORECASE,
 )
+NEGATED_OVERRIDE = re.compile(r"\b(?:do|does|should|must)\s+not\s+$", re.IGNORECASE)
 
 def validate_reply_text(value: str) -> str:
     # Narrow contract guard, not a semantic judge or general injection detector.
-    if INSTRUCTION_OVERRIDE.search(value):
-        raise PydanticCustomError("claim_instruction_override", "Reply text cannot issue instruction-override directives")
+    for match in INSTRUCTION_OVERRIDE.finditer(value):
+        if not NEGATED_OVERRIDE.search(value[:match.start()]):
+            raise PydanticCustomError("claim_instruction_override", "Reply text cannot issue instruction-override directives")
     return value
 
 class AskRequest(BaseModel):

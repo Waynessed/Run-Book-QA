@@ -42,3 +42,23 @@ test('comparison distinguishes unreviewed scores from recorded inspection',async
  await expect(page.getByRole('table',{name:'Validation and failures'})).toContainText('20.0s');
  await expect(page.getByRole('columnheader',{name:'Rejected directives'})).toBeVisible();
 });
+
+test('recorded preview displays saved answer, source and evaluation limits',async({page})=>{
+ test.skip(!process.env.RECORDED_DEMO,'Run against the recorded preview build');
+ await page.setViewportSize({width:1280,height:950});
+ await page.goto('/Run-Book-QA/');
+ await expect(page.getByText('Recorded recruiter preview')).toBeVisible();
+ await expect(page.getByText('This static page does not generate new answers.',{exact:false})).toBeVisible();
+ await page.getByRole('button',{name:'Show recorded answer'}).click();
+ await expect(page.locator('.claim')).not.toHaveCount(0);
+ await expect(page.locator('.review-note')).toContainText('claims supported');
+ await page.screenshot({path:'../docs/assets/recorded-preview.png'});
+ await page.locator('.citation').first().click();
+ await expect(page.locator('.source blockquote')).toBeVisible();
+ await expect(page.locator('.source pre')).toBeVisible();
+ await expect(page.locator('.evaluation')).toContainText('87.5%');
+ await page.locator('.source blockquote').screenshot({path:'../docs/assets/recorded-source.png'});
+ await page.getByRole('button',{name:'What is the office Wi-Fi password?'}).click();
+ await page.getByRole('button',{name:'Show recorded answer'}).click();
+ await expect(page.getByRole('heading',{name:'Insufficient evidence'})).toBeVisible();
+});

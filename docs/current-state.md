@@ -12,9 +12,11 @@ Updated 2026-10-01 (Sydney). Active branch: `codex/runbookqa`. The original held
 
 ## Immediate work and environment
 
-On 2026-10-01, `docker compose ps` could not connect to `//./pipe/docker_engine`: the Docker Desktop daemon is not running. This prevents current live API/browser verification until Docker Desktop is started. It does not invalidate saved evaluation outputs. Continue building a clearly marked static recruiter preview from real recorded development outputs, then retest the live stack when available.
+On 2026-10-01, `docker compose ps` could not connect to the Docker engine pipe. Docker Desktop was launched from its installed executable, but a later elevated check still found no Linux engine pipe. This prevents current live API/browser verification until its engine becomes available. It does not invalidate saved evaluation outputs.
 
-The original frozen result must not be overwritten or recast as a measurement of later fixes. A later quote-copy guard correction is a post-test code revision; its regression checks are engineering tests, not a fresh independent held-out score. Keep held-out cases out of tuning and ordinary CI.
+The finite recorded preview has been built from 12 real saved development responses, original source Markdown and separately labelled frozen aggregate metrics. Its normal and recorded Vite builds passed; four existing fixture browser tests and the new recorded-preview browser test passed. Preview screenshots were inspected. GitHub Pages was observed disabled in repository settings before enabling the Actions publishing source. Backend pytest was not available outside Docker; CI verification of the post-test validator change is pending.
+
+The original frozen result must not be overwritten or recast as a measurement of later fixes. The broader quote-copy guard is a post-test code revision; its generic regression checks are engineering tests, not a fresh independent held-out score. Keep held-out cases out of tuning and ordinary CI.
 
 ## Reproduce locally
 

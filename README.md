@@ -2,6 +2,14 @@
 
 A local engineering-support assistant that answers questions from 30 original fictional Northstar runbooks and shows the exact passages behind each claim. FastAPI, PostgreSQL/pgvector, CPU MiniLM retrieval/reranking, Ollama Qwen 2.5 1.5B, and React/TypeScript.
 
+## Explore the recorded preview
+
+The [recruiter preview](https://waynessed.github.io/Run-Book-QA/) lets visitors inspect saved **real model** development answers, abstention, source documents and measured retrieval comparisons. It is a static recording with four listed questions and three retrieval modes; it cannot answer arbitrary new questions. The comparison includes the original frozen held-out result, including hybrid's 87.5% claim support (below the 90% project target) and one delivered quoted instruction. See [evaluation details](docs/evaluation-report.md) and [observed failures](docs/held-out-findings.md).
+
+![Recorded answer with claim-level citations](docs/assets/recorded-preview.png)
+
+The [source inspection screenshot](docs/assets/recorded-source.png) shows a cited passage; the preview also opens its full original Markdown document. The preview is built from `reports/development-20260929T132154Z-reviewed.json` by `scripts/build-recorded-preview.py`. To reproduce: run `python scripts/build-recorded-preview.py`, then `cd frontend`, `npm ci`, `npm run build:recorded`, and `npm exec -- vite preview --mode recorded`. GitHub Pages publishes that build when Pages is configured to use GitHub Actions.
+
 ## Run locally
 
 Start Docker Desktop, then from this directory in PowerShell:
@@ -31,7 +39,7 @@ flowchart LR
 
 Hybrid combines up to twenty candidates from each baseline, reranks twenty, and supplies at most three passages within a 1,200-token embedding-tokenizer budget. Source characters, document versions and permanent chunk IDs are retained. Document updates build embeddings before atomically replacing the active version. The demonstrated database-pool update changes current guidance from ten to six connections per replica.
 
-Generation uses temperature zero, a 400-token output budget, at most three claims, and one repair attempt. Invalid citation IDs are rejected. A narrow validator also rejects explicit instruction-override directives; it does not establish semantic support or general injection resistance. Timeouts and repeated validation failures are visible errors. The assistant has no command or infrastructure tools.
+Generation uses temperature zero, a 400-token output budget, at most three claims, and one repair attempt. Invalid citation IDs are rejected. A narrow validator also rejects explicit instruction-override directives; a later revision checks quoted copies as well. The frozen held-out run predates that correction, and neither version establishes general injection resistance. Timeouts and repeated validation failures are visible errors. The assistant has no command or infrastructure tools.
 
 ## Verify and evaluate
 
@@ -58,4 +66,4 @@ Keep the frozen configuration unchanged and never tune it using test answers. Fu
 - [Demo guide](docs/demo.md): source inspection, document replacement and troubleshooting.
 - [Scoring rubric](docs/scoring-rubric.md): fixed annotation rules.
 
-All runbooks, logs and secrets are synthetic. No paid API, GPU, accounts or public deployment is required. Review the attached evidence before relying on an answer.
+All runbooks, logs and secrets are synthetic. Live inference remains local; the public preview contains recorded responses. No paid API, GPU or accounts are required to run the local project. Review the attached evidence before relying on an answer.
